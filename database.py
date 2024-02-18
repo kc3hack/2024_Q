@@ -2,8 +2,10 @@ import sqlite3
 from sqlite3 import Connection, Error
 
 # TODO コードをきれいに、あとコメントも
+# TODO    インスタンス変数を使え！
 # TODO 例外処理を入れる
 # TODO 動作確認
+# TODO sqlインジェクション対策
 
 class table():
     def create_connection(db_file):
