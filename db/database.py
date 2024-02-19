@@ -7,8 +7,8 @@ from sqlite3 import Connection, Error
 # TODO sqlインジェクション対策
 
 class Table():
-    def __init__(self,colum_detail :list):
-        self.colum_detail = colum_detail
+    def __init__(self):
+        self.colum_detail = None
         self.table_name = ""
 
     def create_connection(db_file):
@@ -22,8 +22,9 @@ class Table():
     
     def set_table(self,conn,table_name):
         info = None
+        cor = conn.cursor()
         try:
-            info_sql = conn.execute('PRAGMA table_info({})'.format(table_name))
+            info_sql = cor.execute('PRAGMA table_info({})'.format(table_name))
         except Error as e:
             print(e)
         else:
@@ -35,28 +36,44 @@ class Table():
 
     def close_connection(conn):
         conn.close()
+        
+
+    def check_table(self,conn,table_name):
+        cor = conn.cursor()
+        cor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+        info = cor.fetchall()
+        for table in info:
+            if table[0] == table_name:
+                return True
+        return False
+
+        
 
     def create_table(self,conn,table_name:str, column_list:dict):
-        cor = conn.cursor()
-        # CREATE TABLE文の基本形を作成
-        create_table_sql = "CREATE TABLE " + table_name + " (id INTEGER PRIMARY KEY AUTOINCREMENT"
+        if not self.check_table(conn,table_name):
+            cor = conn.cursor()
+            # CREATE TABLE文の基本形を作成
+            create_table_sql = "CREATE TABLE " + table_name + " (id INTEGER PRIMARY KEY AUTOINCREMENT"
+            
+            # 辞書からカラム名とデータ型を取得してSQL文に追加
+            # columns_sql = ', '.join([f"{column_name} {data_type}" for column_name, data_type in column_list.items()])
+            # SQLite の 柔軟な型付け(flexible typing)機能のおかげで、データ型の指定はオプションになっています。(公式ドキュメント曰く)
+            # なのでdatatypeをカット
+            columns_sql = ""
+            for colum_name,data_type in column_list.items():
+                colums_sql += "," + colum_name
+                self.colum_detail.append([colum_name,data_type])
+            # カラム定義をSQL文に追加し、最終的なSQL文を完成させる
+            create_table_sql += columns_sql + ")"
+            try:
+                # SQL文を実行
+                cor.execute(create_table_sql)
+                print("Table created successfully")
+            except Exception as e:
+                print(f"An error occurred: {e}")
         
-        # 辞書からカラム名とデータ型を取得してSQL文に追加
-        # columns_sql = ', '.join([f"{column_name} {data_type}" for column_name, data_type in column_list.items()])
-        # SQLite の 柔軟な型付け(flexible typing)機能のおかげで、データ型の指定はオプションになっています。(公式ドキュメント曰く)
-        # なのでdatatypeをカット
-        columns_sql = ""
-        for colum_name,data_type in column_list.items():
-            colums_sql += "," + colum_name
-            self.colum_detail.append([colum_name,data_type])
-        # カラム定義をSQL文に追加し、最終的なSQL文を完成させる
-        create_table_sql += columns_sql + ")"
-        try:
-            # SQL文を実行
-            cor.execute(create_table_sql)
-            print("Table created successfully")
-        except Exception as e:
-            print(f"An error occurred: {e}")
+        else:
+            print("Table already exists")
 
     # TODO colum_detailに型があるので型のチェックを入れる
     def insert_table(self,conn :Connection, item_lists :list):
