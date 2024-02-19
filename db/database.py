@@ -107,7 +107,12 @@ class Table():
         cor.execute(f"DELETE FROM {self.table_name} WHERE id={condition}")
         conn.commit()
 
-    def destroy_record(self,conn :Connection):
+    def destroy_record(self,conn :Connection,condition):
+        cor = conn.cursor()
+        cor.execute(f"DELETE FROM {self.table_name} WHERE {condition}")
+        conn.commit()
+
+    def destroy_all_record(self,conn :Connection):
         cor = conn.cursor()
         cor.execute(f"DELETE FROM {self.table_name}")
         conn.commit()
