@@ -1,6 +1,5 @@
 import flask
 from flask import session
-# import flask_login
 import dotenv
 from common.models.user import User
 app = flask.Flask(__name__)
