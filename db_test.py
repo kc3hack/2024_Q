@@ -7,10 +7,9 @@ class Test():
         self.column_list = {
             "table1":"TEXT",
             "table2":"TEXT",
-            "id":"INTEGER",
+            # "id":"INTEGER", idはすでに設定されているので不要
             "state":"INTEGER"
         }
-    
         self.conn = table.create_connection('test_data.db')
         self.table.create_table(self.conn,'test',self.column_list)
     
