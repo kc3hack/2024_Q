@@ -8,16 +8,17 @@ from sqlite3 import Connection, Error
 
 class Table():
     def __init__(self):
-        self.colum_detail = None
+        self.colum_detail = []
         self.table_name = ""
 
-    def create_connection(db_file):
+    def create_connection(self,db_file):
         conn = None
         try:
             conn = sqlite3.connect(db_file)
             print(sqlite3.version)
         except Error as e:
             print(e)
+        self.conn = conn
         return conn
     
     def set_table(self,conn,table_name):
@@ -47,7 +48,6 @@ class Table():
                 return True
         return False
 
-        
 
     def create_table(self,conn,table_name:str, column_list:dict):
         if not self.check_table(conn,table_name):
@@ -61,7 +61,7 @@ class Table():
             # なのでdatatypeをカット
             columns_sql = ""
             for colum_name,data_type in column_list.items():
-                colums_sql += "," + colum_name
+                columns_sql += "," + colum_name
                 self.colum_detail.append([colum_name,data_type])
             # カラム定義をSQL文に追加し、最終的なSQL文を完成させる
             create_table_sql += columns_sql + "created_at DEFAULT (DATETIME('now','localtime')) )"
@@ -130,8 +130,8 @@ class Table():
         cor.execute(f"UPDATE {self.table_name} SET {update_colum} WHERE {condition}", list(update_item_list.values()))
         conn.commit()
 
-    def __del__(self):
-        self.conn.close()
-        print("Connection closed")
+    # def __del__(self):
+    #     self.conn.close()
+    #     print("Connection closed")
 
 
