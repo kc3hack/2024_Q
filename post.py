@@ -6,17 +6,17 @@ class Posts():
         self.table = Table()
         self.column_list = {
             "title":"TEXT",
-            "content":"TEXT",
+            "body":"TEXT",
             "user_id":"INTEGER",
             "state":"INTEGER"
         }
         self.conn = self.table.create_connection()
-        self.table.create_table(self.conn,Post.table_name,self.column_list)
+        self.table.create_table(self.conn,Posts.table_name,self.column_list)
 
-    def create_post(self,title,content,user_id):
+    def create_post(self,title,body,user_id):
         item_list = {
             'title':title,
-            'content':content,
+            'body':body,
             'user_id':user_id,
             'state':0
         }
@@ -36,4 +36,8 @@ class Posts():
     
     def get_posts(self,condition):
         rows = self.table.select_table(self.conn,condition)
+        return rows
+
+    def get_user_posts(self,user_id):
+        rows = self.table.select_table(self.conn,f"user_id={user_id}")
         return rows
