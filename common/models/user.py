@@ -44,4 +44,14 @@ class User():
         user_info_dict = dict(zip(columns,user_info))
 
         return user_info_dict
-
+    
+    def delete_user(self,id):
+        condition =  f'id={id}'
+        self.user_table.update_table(self.conn,condition,{'state':2})
+    
+    def password_check(self,id,password):
+        passwordHash = self.get_user_info(id).get('passwordHash')
+        check = False
+        if User.create_password_hash(password) == passwordHash:
+            check = True
+        return check
