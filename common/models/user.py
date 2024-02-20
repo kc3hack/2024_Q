@@ -21,7 +21,7 @@ class User():
         result = hashlib.sha512(text).hexdigest
         return result
     
-    def create_user(self,userName,email,password,createdAt,state):
+    def create_user(self,userName,email,password,state):
         if passwordHash < 8:
             return"パスワードが小さすぎます"
         else:
@@ -30,7 +30,6 @@ class User():
         'userName':userName,
         'email':email,
         'passwordHash':passwordHash,
-        'createdAt':createdAt,
         'state':state
         }
         item_lists = []
