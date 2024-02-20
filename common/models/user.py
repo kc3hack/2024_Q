@@ -45,8 +45,3 @@ class User():
 
         return user_info_dict
 
-
-
-
-
-        

@@ -10,7 +10,7 @@ class Posts():
             "user_id":"INTEGER",
             "state":"INTEGER"
         }
-        self.conn = self.table.create_connection()
+        self.conn = self.table.create_connection('sns_data.db')
         self.table.create_table(self.conn,Posts.table_name,self.column_list)
 
     def create_post(self,title,body,user_id):
