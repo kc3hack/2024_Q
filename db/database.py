@@ -64,7 +64,7 @@ class Table():
                 colums_sql += "," + colum_name
                 self.colum_detail.append([colum_name,data_type])
             # カラム定義をSQL文に追加し、最終的なSQL文を完成させる
-            create_table_sql += columns_sql + ")"
+            create_table_sql += columns_sql + "created_at DEFAULT (DATETIME('now','localtime')) )"
             try:
                 # SQL文を実行
                 cor.execute(create_table_sql)
@@ -78,12 +78,6 @@ class Table():
     # TODO colum_detailに型があるので型のチェックを入れる
     def insert_table(self,conn :Connection, item_lists :list):
         cor = conn.cursor()
-        # for colum in self.colum_detail:
-        #     if colum[0] not in item_list:
-        #         item_list[colum[0]] = None
-        #     data.append(item_list[colum[0]])
-        # data_sql = ', '.join(data)
-        # datas.append(data_sql)
 
         datas = []
         # item_listの中身を取り出して、SQL文に埋め込める形にする
@@ -97,7 +91,7 @@ class Table():
             data_sql = ', '.join(data)
             datas.append(data_sql)
         
-        placeholders = ', '.join(['?'] * len(self.column_detail))
+        placeholders = ', '.join(['?'] * (len(self.column_detail)+2))
         insert_table_sql = f"INSERT INTO {self.table_name} VALUES ({placeholders})"
         cor.executemany(insert_table_sql,datas)
         conn.commit()
