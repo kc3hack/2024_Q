@@ -11,14 +11,13 @@ class Table():
         self.colum_detail = []
         self.table_name = ""
 
-    def create_connection(self,db_file):
+    def create_connection(db_file):
         conn = None
         try:
             conn = sqlite3.connect(db_file)
             print(sqlite3.version)
         except Error as e:
             print(e)
-        self.conn = conn
         return conn
     
     def set_table(self,conn,table_name):
