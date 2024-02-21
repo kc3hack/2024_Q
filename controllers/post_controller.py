@@ -5,6 +5,7 @@ class post_controller():
         self.posts = Posts()
 
     def read_all(self,condition):
+        #ソートしないなら'state = 1' (多分) 
         post_list = self.posts.get_posts(condition)
         return render_template('index.html',post_list = post_list)
     
