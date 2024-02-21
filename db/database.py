@@ -105,6 +105,7 @@ class Table():
         insert_table_sql = f"INSERT INTO {self.table_name}({insert_columns}) VALUES ({placeholders})"
         # print(insert_table_sql)
         # print(datas)
+
         cor.executemany(insert_table_sql,datas)
         conn.commit()
 
