@@ -11,7 +11,7 @@ class Table():
         self.column_detail = []
         self.table_name = ""
 
-    def create_connection(db_file):
+    def create_connection(self,db_file):
         conn = None
         try:
             conn = sqlite3.connect(db_file)
@@ -62,11 +62,13 @@ class Table():
             for column_name,data_type in column_list.items():
                 columns_sql += "," + column_name
                 self.column_detail.append([column_name,data_type])
-            # カラム定義をSQL文に追加し、最終的なSQL文を完成させる
-            create_table_sql += columns_sql + "created_at DEFAULT (DATETIME('now','localtime')) )"
+            # カラム定義をSQL文に追加し、最終的なSQL文を完成させる (,忘れてた)
+            create_table_sql += columns_sql + ",created_at DEFAULT (DATETIME('now','localtime')) )"
             try:
                 # SQL文を実行
                 cor.execute(create_table_sql)
+                # インスタンス変数にテーブル名をセット(忘れてた)
+                self.table_name = table_name
                 print("Table created successfully")
             except Exception as e:
                 print(f"An error occurred: {e}")
@@ -86,12 +88,24 @@ class Table():
             for column in self.column_detail:
                 if column[0] not in item_list:
                     item_list[column[0]] = None
-                data.append(item_list[column[0]])
-            data_sql = ','.join(data)
-            datas.append(data_sql)
-        
-        placeholders = ','.join(['?'] * (len(self.column_detail)+2))
-        insert_table_sql = f"INSERT INTO {self.table_name} VALUES ({placeholders})"
+                # joinは文字列しか受け付けないので文字列にするためにstrに変換
+                if type(item_list[column[0]]) != str:
+                    data.append(str(item_list[column[0]]))
+                else:
+                    data.append(item_list[column[0]])
+                # print(item_list[column[0]])
+                # print("column[0]")
+            # data_sql = ','.join(data)
+            datas.append(data)
+        # 絡む情報の取得
+        insert_columns = ','.join([column[0] for column in self.column_detail])
+
+        placeholders = ','.join(['?'] * (len(self.column_detail)))
+        # カラムの指定の追加
+        insert_table_sql = f"INSERT INTO {self.table_name}({insert_columns}) VALUES ({placeholders})"
+        # print(insert_table_sql)
+        # print(datas)
+
         cor.executemany(insert_table_sql,datas)
         conn.commit()
 
@@ -104,10 +118,14 @@ class Table():
         cor = conn.cursor()
         cor.execute(f"DELETE FROM {self.table_name} WHERE {condition}")
         conn.commit()
-
+    
     def destroy_all_record(self,conn :Connection):
         cor = conn.cursor()
+        print(f"DELETE FROM {self.table_name}")
         cor.execute(f"DELETE FROM {self.table_name}")
+        print(f"DROP TABLE IF EXISTS {self.table_name}")
+        cor.execute(f"DROP TABLE IF EXISTS {self.table_name}")
+
         conn.commit()
     
     def select_table(self,conn :Connection, condition):
@@ -132,5 +150,21 @@ class Table():
     # def __del__(self):
     #     self.conn.close()
     #     print("Connection closed")
+        
+    def table_reset(self,conn :Connection):
+        cor = conn.cursor()
+        cor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+        info = cor.fetchall()
+        for table in info:
+            if table[0] != "sqlite_sequence":
+                print(f"DROP TABLE {table[0]}")
+                cor.execute(f"DROP TABLE {table[0]}")
+        conn.commit()
+        print("Table reset")
 
+    def get_column(self,conn :Connection):
+        cor = conn.cursor()
+        cor.execute(f"PRAGMA table_info({self.table_name})")
+        rows = cor.fetchall()
+        return rows
 
