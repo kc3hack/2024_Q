@@ -1,11 +1,6 @@
-h1 {
-    text-align: center;
-}
-
 table {
     margin-left: auto;/*表を中央にする*/
     margin-right: auto;
-    border-collapse: collapse;/*表の枠線を1本にする？*/
     width: 400px;
     text-align: center;
 }
@@ -15,6 +10,7 @@ table th, table td{/*table内のth,tdに対して*/
     border: solid 1px black;/*表の枠線 1px 黒*/
     font-size: 130%;
   }
+
 
 table th {
     text-align: left;
