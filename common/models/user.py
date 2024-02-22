@@ -21,7 +21,7 @@ class User():
         result = hashlib.sha512(text).hexdigest
         return result
     
-    def create_user(self,userName,email,password,createdAt,state):
+    def create_user(self,userName,email,password,state):
         if passwordHash < 8:
             return"パスワードが小さすぎます"
         else:
@@ -30,7 +30,6 @@ class User():
         'userName':userName,
         'email':email,
         'passwordHash':passwordHash,
-        'createdAt':createdAt,
         'state':state
         }
         item_lists = []
@@ -40,11 +39,17 @@ class User():
         condition = f"id={id}"
         columns = ['userName','email','passwordHash','createdAt','state']
         user_info = self.user_table.select_table(self.conn,condition)
-       
         user_info_dict = dict(zip(columns,user_info))
 
         return user_info_dict
     
+    def get_user_info_by_email(self,email):
+        condition = f"email={email}"
+        columns = ['userName','email','passwordHash','createdAt','state']
+        user_info = self.user_table.select_table(self.conn,condition)
+        user_info_dict = dict(zip(columns,user_info))
+        return user_info_dict
+
     def delete_user(self,id):
         condition =  f'id={id}'
         self.user_table.update_table(self.conn,condition,{'state':2})
