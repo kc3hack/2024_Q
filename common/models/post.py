@@ -4,6 +4,8 @@ class Posts():
     table_name = "post"
     def __init__(self) -> None:
         self.table = Table()
+        # 個数入れたほうがいいか…？
+        # 個数を入れる場合priceはそのままでいい気がするけど入れなかった場合1つあたりの値段にした方が扱いやすいかもという気持ちがある
         self.column_list = {
             "title":"TEXT",
             "body":"TEXT",
