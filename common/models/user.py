@@ -40,7 +40,6 @@ class User():
         columns = ['userName','email','passwordHash','createdAt','state']
         user_info = self.user_table.select_table(self.conn,condition)
         user_info_dict = dict(zip(columns,user_info))
-
         return user_info_dict
     
     def get_user_info_by_email(self,email):
@@ -60,3 +59,7 @@ class User():
         if User.create_password_hash(password) == passwordHash:
             check = True
         return check
+
+    def update_user(self,id,userName,email):
+        condition = f'id={id}'
+        self.user_table.update_table(self.conn,condition,{'userName':userName,'email':email})

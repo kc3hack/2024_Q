@@ -8,7 +8,7 @@ app = flask.Flask(__name__)
 app.secret_key = dotenv.get('SECRET_KEY')
 
 class User_controller():
-    def login():
+    def login(self):
         data = flask.request.form
         password = data['password']
         email = data['email']
@@ -24,24 +24,40 @@ class User_controller():
         else:
             return flask.redirect('/login') #TODO: ログイン失敗時のレンだー先を指定
 
-    def logout():
+    def logout(self):
         session.pop('user_id',None)
         session.pop('user_name',None)
         return flask.redirect('/')
     
     # TODO emailの重複チェック
-    def signup():
+    def signup(self):
         data = flask.request.form
         user = User()
         user.create_user(data['userName'],data['email'],data['password'],0)
         return flask.redirect('/login')
     
-    def currrent_user_info():
+    def currrent_user_info(self):
         user = User()
         user_info = user.get_user_info(session['user_id'])
         return user_info # TODO リダイレクトに変更
     
-    def user_info(user_id):
+    def user_info(self,user_id):
         user = User()
         user_info = user.get_user_info(user_id)
         return user_info # TODO リダイレクトに変更
+    
+    def user_delete(self):
+        user = User()
+        user.delete_user(session['user_id'])
+        return flask.redirect('/logout')
+    
+    def user_update(self):
+        user = User()
+        user.update_user(session['user_id'])
+        return flask.redirect('/user_info')
+    
+    def user_login_check(self):
+        if 'user_id' in session:
+            return True
+        else:
+            return False
