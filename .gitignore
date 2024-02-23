@@ -1,4 +1,4 @@
 .kc3/
 .DS_Store
 .md
-db/__pycache__/*
+**/__pycache__/**

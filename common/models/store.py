@@ -6,7 +6,8 @@ class Stores():
         self.table = Table()
         self.column_list = {
             "name":"TEXT",
-            "address":"TEXT",
+            "lat":"REAL",
+            "lng":"REAL",
             "user_id":"INTEGER",
             "state":"INTEGER",
             "created_at":"INTEGER"
@@ -17,10 +18,11 @@ class Stores():
         # あとでちょうせいする
         self.table.create_table(self.conn,Stores.table_name,self.column_list)
 
-    def create_store(self,name,address,user_id):
+    def create_store(self,name,lat,lng,user_id):
         item_list = {
             'name':name,
-            'address':address,
+            'lat':lat,
+            'lng':lng,
             'user_id':user_id,
             'state':0
         }
