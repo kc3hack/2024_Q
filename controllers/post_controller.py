@@ -5,13 +5,18 @@ class post_controller():
         self.posts = Posts()
 
     def read_all(self,condition):
+        #あとでformの名前かえる
+        sort = request.form['sort']
         post_list = self.posts.get_posts(condition)
-        return render_template('index.html',post_list = post_list)
+        # if(sort != None):
+        #     post_list = self.posts.get_posts(f"title colum Link '%{sort}%'")
+
+        return render_template('timeline.html',post_list=post_list)
     
     def read_post(self,id):
         post = self.posts.get_post(id)
-        return render_template('index.html',post = post)
-
+        return render_template('detail.html',post = post) 
+      
     def create(self,user_id):
         if request.method == 'POST':
             title = request.form['title']
@@ -27,7 +32,7 @@ class post_controller():
             self.posts.create_post(title,body,user_id)
             return redirect(url_for('index'))
 
-        return render_template('create.html')
+        return render_template('post.html')
     
     def delete(self,id):
         post = self.posts.get_post(id)

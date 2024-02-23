@@ -168,3 +168,11 @@ class Table():
         rows = cor.fetchall()
         return rows
 
+    def get_table(self,conn :Connection):
+        cor = conn.cursor()
+        cor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+        info = cor.fetchall()
+        tables = []
+        for table in info:
+            tables.append(table[0])
+        return tables
