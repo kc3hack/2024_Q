@@ -5,13 +5,18 @@ class post_controller():
         self.posts = Posts()
 
     def read_all(self,condition):
-        #ソートしないなら'state = 1' (多分) 
+        #あとでformの名前かえる
+        sort = request.form['sort']
         post_list = self.posts.get_posts(condition)
-        return render_template('index.html',post_list = post_list)
+        # if(sort != None):
+        #     post_list = self.posts.get_posts(f"title colum Link '%{sort}%'")
+
+        return post_list
     
     def read_post(self,id):
         post = self.posts.get_post(id)
-        return render_template('index.html',post = post)    
+        return post 
+      
     def create(self,user_id):
         if request.method == 'POST':
             title = request.form['title']
