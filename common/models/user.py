@@ -11,10 +11,9 @@ class User():
             "userName":"TEXT",
             "email":"TEXT",
             "passwordHash":"TEXT",
-            "createdAt":"INTEGER",
             "state":"INTEGER"
         }
-        self.user_table.table_reset(self.conn)
+        #self.user_table.table_reset(self.conn)
         self.user_table.create_table(self.conn,User.table_name,self.column_list)
     
     def create_password_hash(password):
@@ -33,10 +32,11 @@ class User():
         'passwordHash':passwordHash,
         'state':state
         }
+
         item_lists = []
         item_lists.append(item_list)
+        self.user_table.set_table(self.conn,User.table_name)
         self.user_table.insert_table(self.conn,item_lists)
-        print('created')
 
     def get_user_info(self,id):
         condition = f"id={id}"
