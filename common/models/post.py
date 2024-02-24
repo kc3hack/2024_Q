@@ -10,17 +10,22 @@ class Posts():
             "title":"TEXT",
             "body":"TEXT",
             "user_id":"INTEGER",
-            "state":"INTEGER"
+            "state":"INTEGER",
+            #imageをここでかんりする場合
+            "image_filename":"TEXT"
         }
         self.conn = self.table.create_connection('sns_data.db')
         self.table.create_table(self.conn,Posts.table_name,self.column_list)
 
-    def create_post(self,title,body,user_id):
+            #引数も追加
+    def create_post(self,title,body,user_id,image_filename):
         item_list = {
             'title':title,
             'body':body,
             'user_id':user_id,
-            'state':0
+            'state':0,
+            #ここも変更
+            'image_filename':image_filename
         }
         item_lists = []
         item_lists.append(item_list)

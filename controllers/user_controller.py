@@ -1,5 +1,5 @@
 import flask
-from flask import session
+from flask import *
 import dotenv
 from common.models.user import User
 app = flask.Flask(__name__)
@@ -44,7 +44,7 @@ class User_controller():
     def user_info(self,user_id):
         user = User()
         user_info = user.get_user_info(user_id)
-        return user_info # TODO リダイレクトに変更
+        return render_template('profile.html',user_info=user_info) # TODO リダイレクトに変更
     
     def user_delete(self):
         user = User()

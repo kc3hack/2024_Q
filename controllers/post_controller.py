@@ -1,5 +1,12 @@
 from common.models.post import Posts
 from flask import *
+#画像投稿
+import os
+from werkzeug.utils import secure_filename
+app = Flask(__name__)
+UPLOAD_FOLDER = 'static/images'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 class post_controller():
     def __init__(self) -> None:
         self.posts = Posts()
@@ -25,12 +32,25 @@ class post_controller():
 
         if not title:
             error = 'Title is required.'
+        #画像付き
+        if 'file' not in request.files:
+            error = 'Image is required'
 
         if error is not None:
             flash(error)
         else:
-            self.posts.create_post(title,body,user_id)
+            #画像付き
+            file = request.files['file']
+            if file.filename == '':
+                return redirect(request.url)
+            if file:
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+            #引数の追加
+            self.posts.create_post(title,body,user_id,filename)
             return redirect(url_for('index'))
+
 
         return render_template('post.html')
     
