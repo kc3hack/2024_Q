@@ -18,11 +18,11 @@ class post_controller():
         # if(sort != None):
         #     post_list = self.posts.get_posts(f"title colum Link '%{sort}%'")
 
-        return render_template('timeline.html',post_list=post_list)
+        return render_template('post/timeline.html',post_list=post_list)
     
     def read_post(self,id):
         post = self.posts.get_post(id)
-        return render_template('detail.html',post = post) 
+        return render_template('post/detail.html',post = post) 
       
     def create(self,user_id):
         if request.method == 'POST':
@@ -51,15 +51,15 @@ class post_controller():
             self.posts.create_post(title,body,user_id,filename)
             return redirect(url_for('index'))
 
+        return render_template('post/post.html')
 
-        return render_template('post.html')
     
     def delete(self,id):
         post = self.posts.get_post(id)
         if post is None:
-            return render_template('404.html')
+            return render_template('error/404.html')
         elif post[3] != id:
-            return render_template('403.html')
+            return render_template('error/403.html')
 
 
         self.posts.delete_post(id)
