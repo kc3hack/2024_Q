@@ -1,8 +1,11 @@
-import sqlite3,hashlib
+import hashlib
+import sqlite3
 from sqlite3 import Connection, Error
 
 from flask import flash
+
 from db.database import Table
+
 
 class User():
     table_name = 'user'
@@ -39,6 +42,7 @@ class User():
         item_lists.append(item_list)
         # emailの重複チェック
         if self.get_user_info_by_email(email):
+            print('そのメールアドレスは既に登録されています')
             return flash('そのメールアドレスは既に登録されています')
         self.user_table.set_table(self.conn,User.table_name)
         self.user_table.insert_table(self.conn,item_lists)
@@ -53,7 +57,7 @@ class User():
         return user_info
 
     def get_user_info_by_email(self,email):
-        condition = f"email=''{email}''"
+        condition = f"email='{email}'"
         self.user_table.set_table(self.conn,User.table_name)
         tmp = self.user_table.select_table(self.conn,condition)
         if not tmp:
@@ -67,9 +71,9 @@ class User():
         self.user_table.update_table(self.conn,condition,{'state':2})
     
     def password_check(self,id,password):
-        print('test')
-        print(self.get_user_info(id))
-        print('test')
+        # print('test')
+        # print(self.get_user_info(id))
+        # print('test')
         passwordHash = self.get_user_info(id)[3]
         check = False
         if User.create_password_hash(password) == passwordHash:
@@ -77,6 +81,9 @@ class User():
         return check
 
     def update_user(self,id,userName,email):
+        self.user_table.set_table(self.conn,User.table_name)
+        condition = f'id={id}'
+        self.user_table.update_table(self.conn,condition,{'userName':userName,'email':email})
         self.user_table.set_table(self.conn,User.table_name)
         condition = f'id={id}'
         self.user_table.update_table(self.conn,condition,{'userName':userName,'email':email})
