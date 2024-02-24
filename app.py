@@ -15,15 +15,18 @@ app.secret_key = os.environ["SECRET_KEY"]
 
 @app.route('/user/login', methods=['GET', 'POST'])
 def login():
+    if user_controller.user_login_check_flag():
+        return redirect(url_for('index'))
     if request.method == 'POST':
         return user_controller.login()
     else:
-        if user_controller.user_login_check():
-            return redirect(url_for('index'))
         return render_template('user/login.html')
     
 @app.route('/')
 def index():
+    if user_controller.user_login_check_flag():
+       
+        return render_template('index.html')
     return redirect(url_for('signup'))
 
 
@@ -39,14 +42,23 @@ def signup():
     if request.method == 'POST':
         return user_controller.signup()
     else:
+        if user_controller.user_login_check_flag():
+            return redirect(url_for('index'))
         return render_template('user/signup.html')
-    
+
 @app.route('/user/<int:user_id>', methods=['GET'])
 def user_info(user_id):
-    return user_controller.user_info(user_id)
+    if user_controller.user_login_check_flag():
+        if session['user_id'] == user_id:
+            return user_controller.currrent_user_info()
+        return user_controller.user_info(user_id)
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/user/update', methods=['GET', 'POST'])
 def update_user():
+    if not user_controller.user_login_check_flag():
+        return redirect(url_for('login'))
     if request.method == 'POST':
         return user_controller.user_update()
     else:
@@ -54,18 +66,26 @@ def update_user():
 
 @app.route('/user/delete', methods=['GET'])
 def delete_user():
+    if not user_controller.user_login_check_flag():
+        return redirect(url_for('login'))
     return user_controller.user_delete()
 
 @app.route('/post/<int:post_id>', methods=['GET'])
 def read_post(post_id):
+    if not user_controller.user_login_check_flag():
+        return redirect(url_for('login'))
     return post_controller.read_post(post_id)
 
 @app.route('/post/index', methods=['GET'])
 def read_all_post():
+    if not user_controller.user_login_check_flag():
+        return redirect(url_for('login'))
     return post_controller.read_all()
 
 @app.route('/post/create', methods=['GET', 'POST'])
 def create_post():
+    if not user_controller.user_login_check_flag():
+        return redirect(url_for('login'))
     if request.method == 'POST':
         return post_controller.create(session['user_id'])
     else:
@@ -73,10 +93,15 @@ def create_post():
 
 @app.route('/post/delete/<int:post_id>', methods=['GET'])
 def delete_post(post_id):
+    if not user_controller.user_login_check_flag():
+        return redirect(url_for('login'))
     return post_controller.delete(post_id)
 
+# これいる？
 @app.route('/post/update/<int:post_id>', methods=['GET', 'POST'])
 def update_post(post_id):
+    if not user_controller.user_login_check_flag():
+        return redirect(url_for('login'))
     if request.method == 'POST':
         return post_controller.update(post_id)
     else:
@@ -84,6 +109,8 @@ def update_post(post_id):
     
 @app.route('/post/search', methods=['GET'])
 def search_post():
+    if not user_controller.user_login_check_flag():
+        return redirect(url_for('login'))
     return post_controller.read_all('state=1')
 
 @app.errorhandler(404)
@@ -118,7 +145,11 @@ def near_store():
     lat = request.args.get('lat')
     lng = request.args.get('lng')
     store = Stores()
-    return store.get_near_stores(lat,lng)
+    stores_info = store.get_near_stores(lat, lng)
+    print(stores_info)
+    ret = jsonify(stores_info)
+    print(ret)
+    return ret
 
 @app.route('/api/search', methods=['GET'])
 def search():

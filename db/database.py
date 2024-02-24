@@ -31,6 +31,7 @@ class Table():
             self.table_name = table_name
             info = info_sql.fetchall()
             print(info)
+            self.column_detail = []
             for i in range(len(info)-1):
                 if i != 0:
                     self.column_detail.append([info[i][1],info[i][2]])
@@ -135,13 +136,16 @@ class Table():
         cor.execute(f"DELETE FROM {self.table_name}")
         print(f"DROP TABLE IF EXISTS {self.table_name}")
         cor.execute(f"DROP TABLE IF EXISTS {self.table_name}")
-
         conn.commit()
     
-    def select_table(self,conn :Connection, condition):
+    def select_table(self,conn :Connection, condition = ""):
         cor = conn.cursor()
-        print(f"SELECT * FROM {self.table_name} WHERE {condition}")
-        cor.execute(f"SELECT * FROM {self.table_name} WHERE {condition}")
+        if condition == "":
+            print(f"SELECT * FROM {self.table_name}")
+            cor.execute(f"SELECT * FROM {self.table_name}")
+        else:
+            print(f"SELECT * FROM {self.table_name} WHERE {condition}")
+            cor.execute(f"SELECT * FROM {self.table_name} WHERE {condition}")
         rows = cor.fetchall()
         return rows
     

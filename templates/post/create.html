@@ -16,12 +16,31 @@
       integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
       crossorigin="anonymous"
     />
+    <!-- jQuery,Popper.js,Bootstrap JSの順番で読み込む-->
+    <!-- jQueryの読み込み -->
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Popper.jsの読み込み -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Bootstrapのjsの読み込み -->
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
 
     <title>Portfolio</title>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const select = document.querySelector("#selectPlaces select");
-        select.innerHTML = '<option>ちょっと待てや</option>';
+        select.innerHTML = "<option>ちょっと待てや</option>";
         async function getPlaces(lat, lng, searchWord = "スーパー") {
           const apiKey = "YOUR_GOOGLE_PLACES_API_KEY"; // APIキーを直接入れるか、環境変数から取得
           const radius = 500; // 検索範囲（半径500m）
@@ -37,7 +56,7 @@
             );
             const data = await response.json(); // レスポンスのJSONを解析
             console.log(data);
-            select.innerHTML = '<option>選択してええよ</option>';
+            select.innerHTML = "<option>選択してええよ</option>";
             data.results.forEach((place) => {
               console.log(place);
               let option = document.createElement("option");
@@ -60,15 +79,7 @@
           }
         );
       });
-      function submitPlace() {
-        const select = document.querySelector("#selectPlaces select");
-        const selectedPlaceId = select.value;
-        const hiddenInput = document.querySelector("#selectedPlaceId");
-        hiddenInput.value = selectedPlaceId; // 隠しフィールドに選択された場所のIDを設定
-        // フォームを送信
-        const form = document.querySelector("#placesForm");
-        form.submit();
-      }
+      
     </script>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
@@ -83,48 +94,64 @@
   </head>
   <body>
     <!-- ナビゲーションメニュー -->
-    <nav class="navbar navbar-expand-lg navbar-light text-dark bg-secondary" id="home">
-        <a class="navbar-brand text-white" href="#">ドケチ掲示板</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <nav
+      class="navbar navbar-expand-lg navbar-light text-dark bg-secondary"
+      id="home"
+    >
+      <a class="navbar-brand text-white" href="#">ドケチ掲示板</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
         <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-              <li class="nav-item active">
-              <a class="nav-link text-white" href="#home">ホーム <span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item">
-              <a class="nav-link text-white" href="#skill">投稿</a>
-              </li>
-              <li class="nav-item">
-              <a class="nav-link text-white" href="#contact">アカウント</a>
-              </li>
-          </ul>
-        </div>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link text-white" href="#home"
+              >ホーム <span class="sr-only">(current)</span></a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="#skill">投稿</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="#contact">アカウント</a>
+          </li>
+        </ul>
+      </div>
     </nav>
-
-  <!-- カード -->
-  <div class="container my-5" id="skill">
-    <h2 class= "py-4 text-dark">投稿</h2>
-    <div class="row row-cols-1 row-cols-md-3">
-      <div class="col mb-4">
-        <div class="card">
-          <img src="img/card.jpg" class="card-img-top px-3 mb-3" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">画像名</h5>
-            <p class="card-text">text text text text text text text text text </p>
+    {% with messages = get_flashed_messages() %} {% for message in messages %}
+    <li>
+      <i> {{ message }} </i>
+    </li>
+    {% endfor %} {% endwith %}
+    <!-- カード -->
+    <!-- <div class="container my-5" id="skill">
+      <h2 class="py-4 text-dark">投稿</h2>
+      <div class="row row-cols-1 row-cols-md-3">
+        <div class="col mb-4">
+          <div class="card">
+            <img src="img/card.jpg" class="card-img-top px-3 mb-3" alt="..." />
+            <div class="card-body">
+              <h5 class="card-title">画像名</h5>
+              <p class="card-text">
+                text text text text text text text text text
+              </p>
+            </div>
           </div>
-        
         </div>
       </div>
-      
-      
-    </div>
-</div>
-<!-- 問合せフォーム -->
-<div class="container my-5" id="contact">
-  <form>
-      <div class="form-group">
+    </div> -->
+    <!-- 問合せフォーム -->
+    <div class="container my-5" id="contact">
+      <form method="post">
+        <div class="form-group">
           <label>場所</label>
           <!-- <input
             type="text"
@@ -133,49 +160,60 @@
           <div id="selectPlaces" class="md-3">
             <select
               class="form-select form-select-lg mb-3"
-              name="placeSelect"
-
+              name="placeId"
               onchange="submitPlace()"
-            >
-            </select>
+            ></select>
           </div>
           <small id="emailHelp" class="form-text text-muted"
             >見つけた場所を入れてね！</small
           >
         </div>
-        <input
-          type="hidden"
-          name="selectedPlaceId"
-          id="selectedPlaceId"
-          value=""
-        />
-      <div class="form-group">
-        <label for="exampleInputEmail1">コメント</label>
-        <label for="exampleInputPassword1"></label>
-        <input type="text" class="comment" id="exampleInputPassword1">
-      </div>
-      <div class="form-group form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">国産</label>
-      </div>
-      <button type="submit" class="btn btn-success">Post</button>
-  </form>
-</div>
 
-<!-- フッター -->
-<footer class="bg-dark text-center">
-  <div class="container">
-      <p class="my-0 text-white py-3">ドケチ掲示板</p>
-      
-        
-  </div>
-</footer>
-    <!-- jQuery,Popper.js,Bootstrap JSの順番で読み込む-->
-    <!-- jQueryの読み込み -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <!-- Popper.jsの読み込み -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <!-- Bootstrapのjsの読み込み -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+        <div class="form-group">
+          <label>商品名</label>
+          <input
+            name="title"
+            type="text"
+            class="form-control"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>値段</label>
+          <input
+            name="price"
+            type="number"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">コメント</label>
+          <label for="exampleInputPassword1"></label>
+          <textarea
+            name="comment"
+            type="text"
+            class="form-control comment"
+            id="exampleInputPassword1"
+          ></textarea>
+        </div>
+        <!-- <div class="form-group form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1" />
+          <label class="form-check-label" for="exampleCheck1">国産</label>
+        </div> -->
+        <button type="submit" class="btn btn-success">Post</button>
+      </form>
+    </div>
+
+    <!-- フッター -->
+    <div id="footerWrap">
+      <div id="footer">
+        <!-- フッター -->
+        <footer class="bg-dark text-center fixed-bottom">
+          <div class="container">
+            <p class="my-0 text-white py-3">ドケチ掲示板</p>
+          </div>
+        </footer>
+      </div>
+    </div>
   </body>
 </html>
