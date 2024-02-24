@@ -11,7 +11,6 @@ class Stores():
             "lng":"REAL",
             "plase_id":"INTEGER",
             "state":"INTEGER",
-            "created_at":"INTEGER"
         }
         self.conn = self.table.create_connection('sns_data.db')
         # あれここcreated_atのデフォルト値いらないのでは…？(database.pyですでに設定している)

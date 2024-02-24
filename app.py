@@ -16,7 +16,7 @@ app.secret_key = os.environ["SECRET_KEY"]
 @app.route('/user/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        user_controller.login()
+        return user_controller.login()
     else:
         if user_controller.user_login_check():
             return redirect(url_for('index'))
@@ -113,12 +113,20 @@ def get_places():
     else:
         return jsonify({"error": "API request failed"}), response.status_code
 
-@app.route('/api/search', methods=['GET'])
-def search():
+@app.route('/api/near_store', methods=['GET'])
+def near_store():
     lat = request.args.get('lat')
     lng = request.args.get('lng')
     store = Stores()
     return store.get_near_stores(lat,lng)
+
+@app.route('/api/search', methods=['GET'])
+def search():
+    lat = request.args.get('lat')
+    lng = request.args.get('lng')
+    return post_controller.get_near_post(lat,lng)
+
+
 
 if __name__ == ('__main__'):
     app.run(debug=True, port=5050)
