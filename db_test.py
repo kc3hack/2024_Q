@@ -10,6 +10,8 @@ class Test():
             "test_id":"INTEGER",
             "state":"INTEGER"
         }
+        
+        
         print('new')
     
         self.conn = table.create_connection('test_data.db')
@@ -29,8 +31,15 @@ class Test():
             'test_id':id,
             'state':state
         }
+        item_list2 ={
+            'table1':table1,
+            'table2':table2,
+            'test_id':id,
+            'state':state
+        }
         item_lists = []
         item_lists.append(item_list)
+        item_lists.append(item_list2)
         self.table.insert_table(self.conn,item_lists)
         print('insert')
     
@@ -60,9 +69,9 @@ class Test():
         self.table.update_table(self.conn,condition,{'state':2})
         print('update')
     
-    def get_table_test(self):
-        table = self.table.get_table(self.conn)
-        print(table)
+    # def get_table_test(self):
+    #     table = self.table.get_table(self.conn)
+    #     print(table)
 
 
     
@@ -76,9 +85,9 @@ test.insert_test('test11','test12',1,1)
 test.select_all_test()
 test.update_test(1)
 test.select_all_test()
-test.get_table_test()
-test.db_reset()
-test.get_table_test()
+# test.get_table_test()
+# test.db_reset()
+# test.get_table_test()
 
 # test.check_column()
 
