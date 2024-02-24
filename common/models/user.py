@@ -1,5 +1,7 @@
 import sqlite3,hashlib
 from sqlite3 import Connection, Error
+
+from flask import flash
 from db.database import Table
 
 class User():
@@ -18,12 +20,12 @@ class User():
     
     def create_password_hash(password):
         text = password.encode('utf-8')
-        result = hashlib.sha512(text).hexdigest
+        result = hashlib.sha512(text).hexdigest()
         return result
     
     def create_user(self,userName,email,password,state):
         if len(password) < 8:
-            return"パスワードが小さすぎます"
+            return flash('パスワードは8文字以上で設定してください')
         else:
             passwordHash = User.create_password_hash(password)
         item_list = {
@@ -35,24 +37,29 @@ class User():
 
         item_lists = []
         item_lists.append(item_list)
+        # emailの重複チェック
+        if self.get_user_info_by_email(email):
+            return flash('そのメールアドレスは既に登録されています')
         self.user_table.set_table(self.conn,User.table_name)
         self.user_table.insert_table(self.conn,item_lists)
 
     def get_user_info(self,id):
         condition = f"id={id}"
-        columns = ['userName','email','passwordHash','createdAt','state']
         self.user_table.set_table(self.conn,User.table_name)
-        user_info = self.user_table.select_table(self.conn,condition)
-        user_info_dict = dict(zip(columns,user_info))
-        return user_info_dict
-    
+        tmp = self.user_table.select_table(self.conn,condition)
+        if not tmp:
+            return None
+        user_info = tmp[0]
+        return user_info
+
     def get_user_info_by_email(self,email):
-        condition = f"email={email}"
-        columns = ['userName','email','passwordHash','createdAt','state']
+        condition = f"email='{email}'"
         self.user_table.set_table(self.conn,User.table_name)
-        user_info = self.user_table.select_table(self.conn,condition)
-        user_info_dict = dict(zip(columns,user_info))
-        return user_info_dict
+        tmp = self.user_table.select_table(self.conn,condition)
+        if not tmp:
+            return None
+        user_info = tmp[0]
+        return user_info
 
     def delete_user(self,id):
         self.user_table.set_table(self.conn,User.table_name)
@@ -60,7 +67,10 @@ class User():
         self.user_table.update_table(self.conn,condition,{'state':2})
     
     def password_check(self,id,password):
-        passwordHash = self.get_user_info(id).get('passwordHash')
+        print('test')
+        print(self.get_user_info(id))
+        print('test')
+        passwordHash = self.get_user_info(id)[3]
         check = False
         if User.create_password_hash(password) == passwordHash:
             check = True

@@ -65,7 +65,18 @@ class post_controller():
             return render_template('error/404.html')
         elif post[3] != id:
             return render_template('error/403.html')
-
-
         self.posts.delete_post(id)
         return redirect(url_for('index'))
+    
+    def get_near_post(self, current_lat, current_lng):
+        stores = self.stores.get_near_stores(current_lat, current_lng)
+        
+        posts = []
+        for store in stores:
+            store_id = store[0]
+            store_posts = self.posts.get_posts(f"store_id={store_id}")
+            posts.extend(store_posts)
+            if len(posts) > 100:
+                break
+
+        return posts

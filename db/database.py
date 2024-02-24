@@ -15,7 +15,7 @@ class Table():
         conn = None
         try:
             conn = sqlite3.connect(db_file,check_same_thread=False)
-            print(sqlite3.version)
+            # print(sqlite3.version)
         except Error as e:
             print(e)
         return conn
@@ -73,6 +73,7 @@ class Table():
                 self.table_name = table_name
                 print("Table created successfully")
             except Exception as e:
+                print(table_name)
                 print(f"An error occurred: {e}")
         
         else:
@@ -139,6 +140,7 @@ class Table():
     
     def select_table(self,conn :Connection, condition):
         cor = conn.cursor()
+        print(f"SELECT * FROM {self.table_name} WHERE {condition}")
         cor.execute(f"SELECT * FROM {self.table_name} WHERE {condition}")
         rows = cor.fetchall()
         return rows
