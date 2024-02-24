@@ -34,7 +34,7 @@ class user_controller():
     def signup(self):
         data = flask.request.form
         user = User()
-        user.create_user(data['userName'],data['email'],data['password'],0)
+        user.create_user(data['name'],data['email'],data['password'],0)
         return flask.redirect('/login')
     
     # これどうしよう sessionから現在のログインユーザーとみたいユーザーのページが同じならこのメソッドみたいにしたいけど

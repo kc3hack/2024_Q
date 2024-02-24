@@ -11,7 +11,7 @@ class Table():
         self.column_detail = []
         self.table_name = ""
 
-    def create_connection(db_file):
+    def create_connection(self,db_file):
         conn = None
         try:
             conn = sqlite3.connect(db_file)

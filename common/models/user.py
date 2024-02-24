@@ -34,6 +34,7 @@ class User():
         }
         item_lists = []
         item_lists.append(item_list)
+        self.user_table.insert_table(self.conn,item_lists)
 
     def get_user_info(self,id):
         condition = f"id={id}"
