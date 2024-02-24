@@ -14,7 +14,7 @@ class Table():
     def create_connection(self,db_file):
         conn = None
         try:
-            conn = sqlite3.connect(db_file)
+            conn = sqlite3.connect(db_file,check_same_thread=False)
             print(sqlite3.version)
         except Error as e:
             print(e)
@@ -30,8 +30,10 @@ class Table():
         else:
             self.table_name = table_name
             info = info_sql.fetchall()
-            for i in range(info[1]):
-                self.column_detail.append([info[1][i],info[2][i]])
+            print(info)
+            for i in range(len(info)-1):
+                if i != 0:
+                    self.column_detail.append([info[i][1],info[i][2]])
 
 
     def close_connection(conn):
@@ -104,15 +106,17 @@ class Table():
             placeholders = ','.join(['?'] * (len(self.column_detail)))
             # カラムの指定の追加
             insert_table_sql = f"INSERT INTO {self.table_name}({insert_columns}) VALUES ({placeholders})"
-            # print(insert_table_sql)
-            # print(datas)
-
+            print(insert_table_sql)
+            print(datas)
             cor.executemany(insert_table_sql,datas)
+            print('created')
             conn.commit()
         except Exception as e:
             print(e)
         else:
-            print(insert_table_sql+datas+"多分正常に保存されたよ")
+            for data in datas:
+                
+                print(insert_table_sql+data[0]+data[1]+"多分正常に保存されたよ")
 
     def destroy_record_id(self,conn :Connection,condition,id :int):
         cor = conn.cursor()

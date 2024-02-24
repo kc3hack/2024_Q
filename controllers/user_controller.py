@@ -23,7 +23,7 @@ class user_controller():
             session['user_name'] = user_info['userName']
             return flask.redirect('/') # TODO: ログイン後のリダイレクト先を指定
         else:
-            return flask.redirect('/') #TODO: ログイン失敗時のレンだー先を指定
+            return flask.redirect('/login') #TODO: ログイン失敗時のレンだー先を指定
 
     def logout(self):
         session.pop('user_id',None)
@@ -47,7 +47,6 @@ class user_controller():
         user = User()
         user_info = user.get_user_info(user_id)
 
-     
         return flask.render_template('user/show.html',user_info=user_info)
 
     
