@@ -14,6 +14,7 @@ class User():
             "createdAt":"INTEGER",
             "state":"INTEGER"
         }
+        self.user_table.table_reset(self.conn)
         self.user_table.create_table(self.conn,User.table_name,self.column_list)
     
     def create_password_hash(password):
@@ -22,7 +23,7 @@ class User():
         return result
     
     def create_user(self,userName,email,password,state):
-        if passwordHash < 8:
+        if len(password) < 8:
             return"パスワードが小さすぎます"
         else:
             passwordHash = User.create_password_hash(password)
@@ -34,6 +35,8 @@ class User():
         }
         item_lists = []
         item_lists.append(item_list)
+        self.user_table.insert_table(self.conn,item_lists)
+        print('created')
 
     def get_user_info(self,id):
         condition = f"id={id}"

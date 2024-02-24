@@ -81,33 +81,38 @@ class Table():
         cor = conn.cursor()
 
         datas = []
-        # item_listの中身を取り出して、SQL文に埋め込める形にする
-        for item_list in item_lists:
-            data=[]
-            # item_listの中身を取り出して、SQL文に埋め込める形にする
-            for column in self.column_detail:
-                if column[0] not in item_list:
-                    item_list[column[0]] = None
-                # joinは文字列しか受け付けないので文字列にするためにstrに変換
-                if type(item_list[column[0]]) != str:
-                    data.append(str(item_list[column[0]]))
-                else:
-                    data.append(item_list[column[0]])
-                # print(item_list[column[0]])
-                # print("column[0]")
-            # data_sql = ','.join(data)
-            datas.append(data)
-        # 絡む情報の取得
-        insert_columns = ','.join([column[0] for column in self.column_detail])
+        try :
+                # item_listの中身を取り出して、SQL文に埋め込める形にする
+            for item_list in item_lists:
+                data=[]
+                # item_listの中身を取り出して、SQL文に埋め込める形にする
+                for column in self.column_detail:
+                    if column[0] not in item_list:
+                        item_list[column[0]] = None
+                    # joinは文字列しか受け付けないので文字列にするためにstrに変換
+                    if type(item_list[column[0]]) != str:
+                        data.append(str(item_list[column[0]]))
+                    else:
+                        data.append(item_list[column[0]])
+                    # print(item_list[column[0]])
+                    # print("column[0]")
+                # data_sql = ','.join(data)
+                datas.append(data)
+            # 絡む情報の取得
+            insert_columns = ','.join([column[0] for column in self.column_detail])
 
-        placeholders = ','.join(['?'] * (len(self.column_detail)))
-        # カラムの指定の追加
-        insert_table_sql = f"INSERT INTO {self.table_name}({insert_columns}) VALUES ({placeholders})"
-        # print(insert_table_sql)
-        # print(datas)
+            placeholders = ','.join(['?'] * (len(self.column_detail)))
+            # カラムの指定の追加
+            insert_table_sql = f"INSERT INTO {self.table_name}({insert_columns}) VALUES ({placeholders})"
+            # print(insert_table_sql)
+            # print(datas)
 
-        cor.executemany(insert_table_sql,datas)
-        conn.commit()
+            cor.executemany(insert_table_sql,datas)
+            conn.commit()
+        except Exception as e:
+            print(e)
+        else:
+            print(insert_table_sql+datas+"多分正常に保存されたよ")
 
     def destroy_record_id(self,conn :Connection,condition,id :int):
         cor = conn.cursor()
@@ -176,3 +181,4 @@ class Table():
         for table in info:
             tables.append(table[0])
         return tables
+

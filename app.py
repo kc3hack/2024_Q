@@ -33,7 +33,7 @@ def logout():
 @app.route('/user/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
-        user_controller.signup()
+        return user_controller.signup()
     else:
         return render_template('user/signup.html')
     

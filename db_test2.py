@@ -10,11 +10,9 @@ class Test():
             "test_id":"INTEGER",
             "state":"INTEGER"
         }
-        
-        
         print('new')
     
-        self.conn = table.create_connection('test_data.db')
+        self.conn = table.create_connection('test2_data.db')
         print('connect')
         # テーブルを作成する前にすべてのレコードを削除する
         self.table.table_reset(self.conn)
@@ -31,15 +29,8 @@ class Test():
             'test_id':id,
             'state':state
         }
-        item_list2 ={
-            'table1':table1,
-            'table2':table2,
-            'test_id':id,
-            'state':state
-        }
         item_lists = []
         item_lists.append(item_list)
-        item_lists.append(item_list2)
         self.table.insert_table(self.conn,item_lists)
         print('insert')
     
@@ -63,31 +54,19 @@ class Test():
         for i in info:
             print(i[1])
         print()
-
-    def update_test(self,id):
-        condition =  f'id={id}'
-        self.table.update_table(self.conn,condition,{'state':2})
-        print('update')
-    
-    # def get_table_test(self):
-    #     table = self.table.get_table(self.conn)
-    #     print(table)
-
-
-    
+        
+    def get_table_test(self):
+        table = self.table.get_table(self.conn)
+        print(table)
 
 test = Test()
 # test.db_reset()
 # test.check_test('test')
 # test.check_test('fake')
 # test.check_column()
-test.insert_test('test11','test12',1,1)
-test.select_all_test()
-test.update_test(1)
-test.select_all_test()
-# test.get_table_test()
-# test.db_reset()
-# test.get_table_test()
 
-# test.check_column()
+test.check_column()
+test.db_reset()
+test.check_column()
+# test.get_table_test()
 

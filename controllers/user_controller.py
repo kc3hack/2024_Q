@@ -1,5 +1,8 @@
 import flask
-from flask import session
+from flask import *
+import dotenv
+
+
 from common.models.user import User
 app = flask.Flask(__name__)
 # login_manager = flask_login.LoginManager()
@@ -20,7 +23,7 @@ class user_controller():
             session['user_name'] = user_info['userName']
             return flask.redirect('/') # TODO: ログイン後のリダイレクト先を指定
         else:
-            return flask.redirect('/login') #TODO: ログイン失敗時のレンだー先を指定
+            return flask.redirect('/') #TODO: ログイン失敗時のレンだー先を指定
 
     def logout(self):
         session.pop('user_id',None)
@@ -31,8 +34,8 @@ class user_controller():
     def signup(self):
         data = flask.request.form
         user = User()
-        user.create_user(data['userName'],data['email'],data['password'],0)
-        return flask.redirect('/login')
+        user.create_user(data['name'],data['email'],data['password'],0)
+        return flask.redirect('/')#一旦/で
     
     # これどうしよう sessionから現在のログインユーザーとみたいユーザーのページが同じならこのメソッドみたいにしたいけど
     def currrent_user_info(self):
@@ -43,7 +46,10 @@ class user_controller():
     def user_info(self,user_id):
         user = User()
         user_info = user.get_user_info(user_id)
+
+     
         return flask.render_template('user/show.html',user_info=user_info)
+
     
     def user_delete(self):
         user = User()
