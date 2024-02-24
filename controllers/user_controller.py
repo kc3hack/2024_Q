@@ -1,11 +1,9 @@
 import flask
 from flask import session
-import dotenv
 from common.models.user import User
 app = flask.Flask(__name__)
 # login_manager = flask_login.LoginManager()
 # login_manager.init_app(app)
-app.secret_key = dotenv.get('SECRET_KEY')
 
 class user_controller():
     def login(self):

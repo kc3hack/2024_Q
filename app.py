@@ -1,3 +1,5 @@
+import os
+import dotenv
 from flask import Flask, redirect, render_template, request, url_for
 
 from controllers.user_controller import user_controller
@@ -5,10 +7,9 @@ from controllers.post_controller import post_controller
 app = Flask(__name__)
 user_controller = user_controller()
 post_controller = post_controller()
+dotenv.load_dotenv()
+app.secret_key = os.environ["SECRET_KEY"]
 
-@app.route('/')
-def index():
-    return redirect(url_for('user/login'))
 
 @app.route('/user/login', methods=['GET', 'POST'])
 def login():
@@ -17,6 +18,11 @@ def login():
     else:
         return render_template('user/login.html')
     
+@app.route('/')
+def index():
+    return redirect(url_for('signup'))
+
+
 # usercontrollerからのリターンがあるんだから、それをそのまま返せばいいのでは…？
 # 後で考えます
 
@@ -38,10 +44,13 @@ def user_info(user_id):
 @app.route('/user/update', methods=['GET', 'POST'])
 def update_user():
     if request.method == 'POST':
-        return user_controller.update()
+        return user_controller.user_update()
     else:
         return render_template('user/update.html')
 
+@app.route('/user/delete', methods=['GET'])
+def delete_user():
+    return user_controller.user_delete()
 @app.route('/post/<int:post_id>', methods=['GET'])
 def read_post(post_id):
     return post_controller.read_post(post_id)
