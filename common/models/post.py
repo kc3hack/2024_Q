@@ -15,11 +15,12 @@ class Posts():
         self.conn = self.table.create_connection('sns_data.db')
         self.table.create_table(self.conn,Posts.table_name,self.column_list)
 
-    def create_post(self,title,body,user_id):
+    def create_post(self,title,body,user_id,store_id):
         item_list = {
             'title':title,
             'body':body,
             'user_id':user_id,
+            'store_id':store_id,
             'state':0
         }
         item_lists = []

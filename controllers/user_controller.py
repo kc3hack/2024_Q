@@ -7,7 +7,7 @@ app = flask.Flask(__name__)
 # login_manager.init_app(app)
 app.secret_key = dotenv.get('SECRET_KEY')
 
-class User_controller():
+class user_controller():
     def login(self):
         data = flask.request.form
         password = data['password']
@@ -36,6 +36,7 @@ class User_controller():
         user.create_user(data['userName'],data['email'],data['password'],0)
         return flask.redirect('/login')
     
+    # これどうしよう sessionから現在のログインユーザーとみたいユーザーのページが同じならこのメソッドみたいにしたいけど
     def currrent_user_info(self):
         user = User()
         user_info = user.get_user_info(session['user_id'])
@@ -44,7 +45,7 @@ class User_controller():
     def user_info(self,user_id):
         user = User()
         user_info = user.get_user_info(user_id)
-        return user_info # TODO リダイレクトに変更
+        return flask.render_template('user/show.html',user_info=user_info)
     
     def user_delete(self):
         user = User()
@@ -54,7 +55,7 @@ class User_controller():
     def user_update(self):
         user = User()
         user.update_user(session['user_id'])
-        return flask.redirect('/user_info')
+        return flask.redirect(f'/user/{session["user_id"]}')
     
     def user_login_check(self):
         if 'user_id' in session:
