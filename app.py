@@ -16,7 +16,7 @@ app.secret_key = os.environ["SECRET_KEY"]
 @app.route('/user/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        user_controller.login()
+        return user_controller.login()
     else:
         if user_controller.user_login_check():
             return redirect(url_for('index'))

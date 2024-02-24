@@ -11,23 +11,34 @@ app = flask.Flask(__name__)
 class user_controller():
     def login(self):
         data = flask.request.form
+        print(data)
         password = data['password']
         email = data['email']
         user = User()
         user_info = user.get_user_info_by_email(email)
-        if user.password_check(user_info['id'],password):
-            if user_info['state'] == 2:
+        print(user_info)
+        if user_info == None:
+            print('そのメールアドレスは登録されていません')
+            flash('そのメールアドレスは登録されていません')
+            return flask.redirect('login')
+        if user.password_check(user_info[0],password):
+            if user_info[4] == 2:
                 return flask.redirect('/error/401')
             # flask_login.login_user(user_info)
-            session['user_id'] = user_info['id']
-            session['user_name'] = user_info['userName']
-            return flask.redirect('/') # TODO: ログイン後のリダイレクト先を指定
+            session['user_id'] = user_info[0]
+            session['user_name'] = user_info[1]
+            session['email'] = user_info[2]
+            url = '/user/'+str(user_info[0])
+            return flask.redirect(url) # TODO: ログイン後のリダイレクト先を指定
         else:
-            return flask.redirect('/login') #TODO: ログイン失敗時のレンだー先を指定
+            print('パスワードが違います')
+            flash('パスワードが違います')
+            return flask.redirect('login') #TODO: ログイン失敗時のレンだー先を指定
 
     def logout(self):
         session.pop('user_id',None)
         session.pop('user_name',None)
+        session.pop('email',None)
         return flask.redirect('/')
     
     # TODO emailの重複チェック
@@ -35,7 +46,7 @@ class user_controller():
         data = flask.request.form
         user = User()
         user.create_user(data['name'],data['email'],data['password'],0)
-        return flask.redirect('/login')
+        return flask.redirect('login')
     
     # これどうしよう sessionから現在のログインユーザーとみたいユーザーのページが同じならこのメソッドみたいにしたいけど
     def currrent_user_info(self):
