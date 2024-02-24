@@ -16,7 +16,7 @@ class post_controller():
 
     def read_all(self,condition):
         #あとでformの名前かえる
-        sort = request.form['sort']
+        # sort = request.form['sort']
         post_list = self.posts.get_posts(condition)
         # if(sort != None):
         #     post_list = self.posts.get_posts(f"title colum Link '%{sort}%'")
@@ -29,8 +29,8 @@ class post_controller():
 
     def create(self,user_id):
         if request.method == 'POST':
-            title = request.form['title']
-            body = request.form['body']
+            title = request.form['place']
+            body = request.form['comment']
             price = request.form['price']
             # storeテーブルから取得したidを入れる
             store_id = self.stores.get_store_by_place_id(request.form['place_id'])[0]
@@ -51,8 +51,10 @@ class post_controller():
         #     if file:
         #         filename = secure_filename(file.filename)
         #         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
             #引数の追加
-            # self.posts.create_post(title,body,user_id,filename)
+            # TODO 要調整
+            self.posts.create_post(title,body,user_id)
             return redirect(url_for('index'))
         return render_template('post/post.html')
 

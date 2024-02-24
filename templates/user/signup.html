@@ -38,12 +38,12 @@
     <form method="POST">
         <div class="form-group">
             <label for="exampleInputEmail1">名前（漢字）</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
             <small id="emailHelp" class="form-text text-muted">姓と名の間をひとマスあけて下さい　例：佐藤　太郎</small>
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1">名前（カタカナ）</label>
-            <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <input type="text"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
             <small id="emailHelp" class="form-text text-muted">姓と名の間をひとマスあけて下さい　例：サトウ　タロウ</small>
           </div>
           <div class="form-group">
@@ -61,12 +61,18 @@
             <label for="exampleInputPassword1"></label>
             <input type="password" class="form-control" id="exampleInputPassword1">
           </div>
+        
           <a>利用規約がうんたらかんたら</a>
           <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">利用規約に同意します</label>
           </div>
           <button type="submit" class="btn btn-success">登録</button>
+    </form>
+    <form method="post" enctype="multipart/form-data" >
+        <div>
+          <input type="file" id = image name="file">
+        </div>
     </form>
         </div>
   <body>
