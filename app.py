@@ -1,7 +1,8 @@
 import os
 import dotenv
-from flask import Flask, jsonify, redirect, render_template, request, url_for
+from flask import Flask, jsonify, redirect, render_template, request, session, url_for
 import requests
+from common.models.store import Stores
 
 from controllers.user_controller import user_controller
 from controllers.post_controller import post_controller
@@ -65,7 +66,7 @@ def read_all_post():
 @app.route('/post/create', methods=['GET', 'POST'])
 def create_post():
     if request.method == 'POST':
-        return post_controller.create()
+        return post_controller.create(session['user_id'])
     else:
         return render_template('post/create.html')
 
@@ -110,6 +111,13 @@ def get_places():
         return jsonify(response.json())
     else:
         return jsonify({"error": "API request failed"}), response.status_code
+
+@app.route('/api/search', methods=['GET'])
+def search():
+    lat = request.args.get('lat')
+    lng = request.args.get('lng')
+    store = Stores()
+    return store.get_near_stores(lat,lng)
 
 if __name__ == ('__main__'):
     app.run(debug=True, port=5050)
