@@ -1,0 +1,19 @@
+table {
+    margin-left: auto;/*表を中央にする*/
+    margin-right: auto;
+    width: 400px;
+    text-align: center;
+}
+
+table th, table td{/*table内のth,tdに対して*/
+    padding: 30px;/*上下左右20pxずつ*/
+    border: solid 1px black;/*表の枠線 1px 黒*/
+    font-size: 130%;
+  }
+
+
+table th {
+    text-align: left;
+    font-size: 150%;
+}
+  

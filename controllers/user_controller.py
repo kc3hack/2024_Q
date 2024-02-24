@@ -47,7 +47,6 @@ class user_controller():
         user = User()
         user_info = user.get_user_info(user_id)
 
-     
         return flask.render_template('user/show.html',user_info=user_info)
 
     
