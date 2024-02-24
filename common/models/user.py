@@ -43,11 +43,11 @@ class User():
         columns = ['userName','email','passwordHash','createdAt','state']
         self.user_table.set_table(self.conn,User.table_name)
         user_info = self.user_table.select_table(self.conn,condition)
-        user_info_dict = dict(zip(columns,user_info))
-        return user_info_dict
+        #  user_info_dict = dict(zip(columns,user_info))
+        return user_info
     
     def get_user_info_by_email(self,email):
-        condition = f"email={email}"
+        condition = f"email='{email}'"
         columns = ['userName','email','passwordHash','createdAt','state']
         self.user_table.set_table(self.conn,User.table_name)
         user_info = self.user_table.select_table(self.conn,condition)
