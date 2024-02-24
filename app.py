@@ -16,6 +16,8 @@ def login():
     if request.method == 'POST':
         user_controller.login()
     else:
+        if user_controller.user_login_check():
+            return redirect(url_for('index'))
         return render_template('user/login.html')
     
 @app.route('/')
