@@ -1,16 +1,34 @@
 <!DOCTYPE html>
 <html lang="ja">
     <head>
-        <link rel="stylesheet" href="page.css"/>
-        <meta charset="utf-8">
-        <link rel="stylesheet" 
-        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
-        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" 
+        <meta charset='utf-8'>
+        <title>ドケチ掲示板 - 500</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" 
         crossorigin="anonymous">
-        <title>どけち掲示板</title>
+
+        <style>
+            .center {
+                text-align:center;
+            }
+            form p {
+                margin-top: 0px;
+                margin-bottom: 0px;
+            }
+            p.label {
+                display:inline;
+                font-size: 20px;
+                margin-right: 10px;
+            }
+            input{
+                scale: 1.4;
+            }
+            table {
+                margin:auto
+            }
+        </style>
     </head>
-    <body>
-        <!-- jQuery,Popper.js,Bootstrap JSの順番で読み込む-->
+          <!-- jQuery,Popper.js,Bootstrap JSの順番で読み込む-->
         <!-- jQueryの読み込み -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <!-- Popper.jsの読み込み -->
@@ -37,64 +55,19 @@
           </ul>
         </div>
     </nav>
-    <p>絞り込み条件</p>
-    <div class="table">
-        <table class="table1">
-            <thead>
-                <tr>
-                    <th colspan="2">肉・魚</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>精肉</td>
-                    <td>加工肉</td>
-                </tr>
-                <tr>
-                    <td>鮮魚</td>
-                    <td>寿司・刺身</td>
-                </tr>
-            </tbody>
-        </table>
-        &nbsp;
-        <table class="vagetables">
-            <thead>
-                <tr>
-                    <th>野菜</th>
-                </tr>
-            </thead>
-        </table>
-        &nbsp;
-        <table class="deli">
-            <thead>
-                <tr>
-                    <th>惣菜</th>
-                </tr>
-            </thead>
-        </table>
-        &nbsp;
-        <table class="vagetables">
-            <thead>
-                <tr>
-                    <th>国産</th>
-                </tr>
-            </thead>
-        </table>
-        &nbsp;
-        <table class="price">
-            <thead>
-                <tr>
-                    <th>価格帯</th>
-                </tr>
-            </thead>
-        </table>
+    &nbsp;
 
-    </div>
-        <!-- フッター -->
-        <footer class="bg-dark text-center fixed-bottom">
+    <body class="center" style="margin: 0px !important;">
+        <h3 style="padding-bottom: 10px;">ドケチ掲示板</h3>
+        <h2>500 Internal Server Error</h2>
+        <p style="padding-bottom: 10px;">サーバーで問題が発生しました</p>
+        <input type="button" value="ホームに戻る" id="home" onclick="location.href = '/'">
+    </body>
+           <!-- フッター -->
+           <footer class="bg-dark text-center fixed-bottom">
             <div class="container">
                 <p class="my-0 text-white py-3">ドケチ掲示板</p>
             </div>
         </footer>
-  </body>
+    
 </html>
