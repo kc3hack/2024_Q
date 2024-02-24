@@ -1,0 +1,31 @@
+.icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 20px;
+    
+}
+.icon img {
+    border: 1px solid #00000050;
+  position: relative;
+  top: 10px;
+}
+  .icon button {
+    width: 340px;
+    height: 40px;
+    background-color: #00000095;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: #fff;
+    font-size: 14px;
+    padding: 2px 0;
+    position: relative;
+    bottom: 30px;
+    overflow: hidden;
+  }
+
+.icon {
+    overflow: hidden;
+}
