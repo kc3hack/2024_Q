@@ -13,7 +13,7 @@ class User():
             "passwordHash":"TEXT",
             "state":"INTEGER"
         }
-        #self.user_table.table_reset(self.conn)
+        # self.user_table.table_reset(self.conn)
         self.user_table.create_table(self.conn,User.table_name,self.column_list)
     
     def create_password_hash(password):
@@ -41,6 +41,7 @@ class User():
     def get_user_info(self,id):
         condition = f"id={id}"
         columns = ['userName','email','passwordHash','createdAt','state']
+        self.user_table.set_table(self.conn,User.table_name)
         user_info = self.user_table.select_table(self.conn,condition)
         user_info_dict = dict(zip(columns,user_info))
         return user_info_dict
@@ -48,11 +49,13 @@ class User():
     def get_user_info_by_email(self,email):
         condition = f"email={email}"
         columns = ['userName','email','passwordHash','createdAt','state']
+        self.user_table.set_table(self.conn,User.table_name)
         user_info = self.user_table.select_table(self.conn,condition)
         user_info_dict = dict(zip(columns,user_info))
         return user_info_dict
 
     def delete_user(self,id):
+        self.user_table.set_table(self.conn,User.table_name)
         condition =  f'id={id}'
         self.user_table.update_table(self.conn,condition,{'state':2})
     
@@ -64,5 +67,6 @@ class User():
         return check
 
     def update_user(self,id,userName,email):
+        self.user_table.set_table(self.conn,User.table_name)
         condition = f'id={id}'
         self.user_table.update_table(self.conn,condition,{'userName':userName,'email':email})

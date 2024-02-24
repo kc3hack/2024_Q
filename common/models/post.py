@@ -12,7 +12,7 @@ class Posts():
             "user_id":"INTEGER",
             "state":"INTEGER",
             #imageをここでかんりする場合
-            "image_filename":"TEXT"
+            #"image_filename":"TEXT"
         }
         self.conn = self.table.create_connection('sns_data.db')
         self.table.create_table(self.conn,Posts.table_name,self.column_list)
@@ -30,8 +30,8 @@ class Posts():
             'user_id':user_id,
            
             #ここも変更
-            'image_filename':image_filename,
-            'store_id':store_id,
+            # 'image_filename':image_filename,
+            # 'store_id':store_id,
             'state':0
         }
         item_lists = []

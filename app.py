@@ -51,6 +51,7 @@ def update_user():
 @app.route('/user/delete', methods=['GET'])
 def delete_user():
     return user_controller.user_delete()
+
 @app.route('/post/<int:post_id>', methods=['GET'])
 def read_post(post_id):
     return post_controller.read_post(post_id)
@@ -79,7 +80,7 @@ def update_post(post_id):
     
 @app.route('/post/search', methods=['GET'])
 def search_post():
-    return post_controller.search()
+    return post_controller.read_all('state=1')
 
 @app.errorhandler(404)
 def error_404(error):

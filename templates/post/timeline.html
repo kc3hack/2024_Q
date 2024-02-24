@@ -40,6 +40,7 @@
             </div>
          </nav>
           <!-- カード -->
+        {% for post in post_list %}
         <div class="container my-5" id="skill">
             <h2 class= "py-4 text-dark">タイムライン</h2>
             <div class="row row-cols-1 row-cols-md-3">
@@ -48,36 +49,13 @@
                 <img src="img/card.jpg" class="card-img-top px-3 mb-3" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">画像名</h5>
-                    <p class="card-text">text text text text text text text text text </p>
+                    <p class="card-text"> post</p>
                 </div>
                 </div>
-            </div>
-            <div class="col mb-4">
-                <div class="card">
-                <img src="img/card.jpg" class="card-img-top px-3 mb-3" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">画像名</h5>
-                    <p class="card-text">text text text text text text text text text </p>
-                </div>
-                </div>
-            </div>
-            <div class="col mb-4">
-                <div class="card">
-                <img src="img/card.jpg" class="card-img-top px-3 mb-3" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">画像名</h5>
-                    <p class="card-text">text text text text text text text text text </p>
-                </div>
-                </div>
-            </div>
-            <div class="col mb-4">
-                <div class="card">
-                <img src="img/card.jpg" class="card-img-top px-3 mb-3" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">画像名</h5>
-                    <p class="card-text">text text text text text text text text text </p>
-                </div>
-                </div>
+            {% endfor }
+            
+            
+            
             </div>
             </div>
         </div>

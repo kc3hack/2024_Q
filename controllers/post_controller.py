@@ -13,7 +13,7 @@ class post_controller():
 
     def read_all(self,condition):
         #あとでformの名前かえる
-        sort = request.form['sort']
+        # sort = request.form['sort']
         post_list = self.posts.get_posts(condition)
         # if(sort != None):
         #     post_list = self.posts.get_posts(f"title colum Link '%{sort}%'")
@@ -22,33 +22,33 @@ class post_controller():
     
     def read_post(self,id):
         post = self.posts.get_post(id)
-        return render_template('post/detail.html',post = post) 
+        return render_template('post/detail.html',post = post)
       
     def create(self,user_id):
         if request.method == 'POST':
-            title = request.form['title']
-            body = request.form['body']
+            title = request.form['place']
+            body = request.form['comment']
             error = None
 
         if not title:
             error = 'Title is required.'
         #画像付き
-        if 'file' not in request.files:
-            error = 'Image is required'
+        # if 'file' not in request.files:
+        #     error = 'Image is required'
 
-        if error is not None:
-            flash(error)
-        else:
-            #画像付き
-            file = request.files['file']
-            if file.filename == '':
-                return redirect(request.url)
-            if file:
-                filename = secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # if error is not None:
+        #     flash(error)
+        # else:
+        #     #画像付き
+        #     file = request.files['file']
+        #     if file.filename == '':
+        #         return redirect(request.url)
+        #     if file:
+        #         filename = secure_filename(file.filename)
+        #         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
             #引数の追加
-            self.posts.create_post(title,body,user_id,filename)
+            self.posts.create_post(title,body,user_id)
             return redirect(url_for('index'))
 
         return render_template('post/post.html')
