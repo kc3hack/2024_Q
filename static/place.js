@@ -28,7 +28,7 @@
 
 
 
-async function getPlaces(lat, lng, searchWord) {
+async function getPlaces(lat, lng, searchWord="スーパー") {
   const apiKey = process.env.GOOGLE_PLACES_API_KEY; // TODO ここにAPIキーを入れる flaskから頑張ってもらってくる
   const radius = 500; // 検索範囲（半径500m）
 
@@ -42,8 +42,7 @@ async function getPlaces(lat, lng, searchWord) {
     const data = await response.json(); // レスポンスのJSONを解析
 
 
-    // レスポンスデータをクライアントに送信
-    return data;
+    // レスポンスデータをクライアントに送信    return data;
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");

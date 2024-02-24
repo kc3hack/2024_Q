@@ -1,6 +1,7 @@
 import os
 import dotenv
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, jsonify, redirect, render_template, request, url_for
+import requests
 
 from controllers.user_controller import user_controller
 from controllers.post_controller import post_controller
@@ -94,6 +95,21 @@ def error_401(error):
 @app.errorhandler(500)
 def error_500(error):
     return render_template('error/500.html')
+
+# googleのapiを呼び出すやつ
+@app.route('/api/places', methods=['GET'])
+def get_places():
+    # クライアントからのリクエストURLを取得
+    url = request.args.get('url')
+    url = url+"&key=AIzaSyATFKf-BmfXyh2H_QSjwXSLJZiAwp0cezw"
+    # Google Places APIへのリクエストを送信
+    response = requests.get(url)
+    
+    # APIからのレスポンスをJSON形式でクライアントに返す
+    if response.status_code == 200:
+        return jsonify(response.json())
+    else:
+        return jsonify({"error": "API request failed"}), response.status_code
 
 if __name__ == ('__main__'):
     app.run(debug=True, port=5050)
