@@ -8,29 +8,27 @@ class Posts():
         # 個数を入れる場合priceはそのままでいい気がするけど入れなかった場合1つあたりの値段にした方が扱いやすいかもという気持ちがある
         self.column_list = {
             "title":"TEXT",
+            "price":"INTEGER",
             "body":"TEXT",
             "user_id":"INTEGER",
-            "state":"INTEGER",
             #imageをここでかんりする場合
-            "image_filename":"TEXT"
+            # "image_filename":"TEXT"
+            "store_id":"INTEGER",
+            "state":"INTEGER",
         }
         self.conn = self.table.create_connection('sns_data.db')
         self.table.create_table(self.conn,Posts.table_name,self.column_list)
+        #引数も追加
 
-
-
-            #引数も追加
-    
-
-    def create_post(self,title,body,user_id,store_id,image_filename):
-
+    # def create_post(self,title,body,user_id,store_id,image_filename):
+    def create_post(self,title,price,body,user_id,store_id):
         item_list = {
             'title':title,
+            'price':price,
             'body':body,
             'user_id':user_id,
-           
             #ここも変更
-            'image_filename':image_filename,
+            # 'image_filename':image_filename,
             'store_id':store_id,
             'state':0
         }

@@ -35,7 +35,7 @@ class user_controller():
         data = flask.request.form
         user = User()
         user.create_user(data['name'],data['email'],data['password'],0)
-        return flask.redirect('/')#一旦/で
+        return flask.redirect('/login')
     
     # これどうしよう sessionから現在のログインユーザーとみたいユーザーのページが同じならこのメソッドみたいにしたいけど
     def currrent_user_info(self):

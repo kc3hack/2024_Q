@@ -1,6 +1,8 @@
 import os
 import dotenv
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, jsonify, redirect, render_template, request, session, url_for
+import requests
+from common.models.store import Stores
 
 from controllers.user_controller import user_controller
 from controllers.post_controller import post_controller
@@ -16,6 +18,8 @@ def login():
     if request.method == 'POST':
         user_controller.login()
     else:
+        if user_controller.user_login_check():
+            return redirect(url_for('index'))
         return render_template('user/login.html')
     
 @app.route('/')
@@ -62,7 +66,7 @@ def read_all_post():
 @app.route('/post/create', methods=['GET', 'POST'])
 def create_post():
     if request.method == 'POST':
-        return post_controller.create()
+        return post_controller.create(session['user_id'])
     else:
         return render_template('post/create.html')
 
@@ -92,6 +96,28 @@ def error_401(error):
 @app.errorhandler(500)
 def error_500(error):
     return render_template('error/500.html')
+
+# googleのapiを呼び出すやつ
+@app.route('/api/places', methods=['GET'])
+def get_places():
+    # クライアントからのリクエストURLを取得
+    url = request.args.get('url')
+    url = url+"&key=AIzaSyATFKf-BmfXyh2H_QSjwXSLJZiAwp0cezw"
+    # Google Places APIへのリクエストを送信
+    response = requests.get(url)
+    
+    # APIからのレスポンスをJSON形式でクライアントに返す
+    if response.status_code == 200:
+        return jsonify(response.json())
+    else:
+        return jsonify({"error": "API request failed"}), response.status_code
+
+@app.route('/api/search', methods=['GET'])
+def search():
+    lat = request.args.get('lat')
+    lng = request.args.get('lng')
+    store = Stores()
+    return store.get_near_stores(lat,lng)
 
 if __name__ == ('__main__'):
     app.run(debug=True, port=5050)
