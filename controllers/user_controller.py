@@ -45,6 +45,7 @@ class user_controller():
     def signup(self):
         data = flask.request.form
         user = User()
+        flash('Authentication failed! Please check your input.')
         user.create_user(data['name'],data['email'],data['password'],0)
         return flask.redirect('login')
     

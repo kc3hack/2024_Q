@@ -29,15 +29,15 @@ class post_controller():
 
     def create(self,user_id):
         if request.method == 'POST':
-            title = request.form['place']
+            # title = request.form['place']
             body = request.form['comment']
             price = request.form['price']
             # storeテーブルから取得したidを入れる
             store_id = self.stores.get_store_by_place_id(request.form['place_id'])[0]
             error = None
+         
 
-        if not title:
-            error = 'Title is required.'
+       
         # #画像付き
         # if 'file' not in request.files:
         #     error = 'Image is required'
@@ -54,7 +54,7 @@ class post_controller():
 
             #引数の追加
             # TODO 要調整
-            self.posts.create_post(title,body,user_id)
+            self.posts.create_post(body,user_id)
             return redirect(url_for('index'))
         return render_template('post/post.html')
 

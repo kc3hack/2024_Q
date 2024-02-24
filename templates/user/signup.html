@@ -35,31 +35,45 @@
   <h1>ユーザー新規登録</h1>
   <!-- 問合せフォーム -->
 <div class="container my-5" id="contact">
+{% with messages = get_flashed_messages() %}
+    {% for message in messages %}
+    <li>
+        <i>
+            <font color="orange">{{ message }}</font>
+        </i>
+    </li>
+    {% endfor %}
+ {% endwith %}
     <form method="POST">
+       
         <div class="form-group">
             <label for="exampleInputEmail1">名前（漢字）</label>
-            <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <input placeholder="名前（漢字）" type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
             <small id="emailHelp" class="form-text text-muted">姓と名の間をひとマスあけて下さい　例：佐藤　太郎</small>
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1">名前（カタカナ）</label>
-            <input type="text"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <input placeholder="名前（カタカナ）" type="text"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
             <small id="emailHelp" class="form-text text-muted">姓と名の間をひとマスあけて下さい　例：サトウ　タロウ</small>
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1">Eメールアドレス</label>
-            <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-            <small id="emailHelp" class="form-text text-muted">姓と名の間をひとマスあけて下さい　例：サトウ　タロウ</small>
+            <input placeholder="E-mail" type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <small id="emailHelp" class="form-text text-muted">有効なE-mailアドレスを入力してください</small>
           </div>
           <div class="form-group">
+          
+            
+
             <label for="exampleInputEmail1">パスワード</label>
             <label for="exampleInputPassword1"></label>
-            <input type="password" name="password" class="form-control" id="exampleInputPassword1">
+            <input  placeholder="Password" type="password" name="password" class="form-control" id="exampleInputPassword1">
           </div>
           <div class="form-group">
+           
             <label for="exampleInputEmail1">パスワード（再確認）</label>
             <label for="exampleInputPassword1"></label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <input placeholder="Password" type="password" class="form-control" id="exampleInputPassword1">
           </div>
         
           <a>利用規約がうんたらかんたら</a>

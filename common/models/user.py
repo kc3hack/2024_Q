@@ -53,7 +53,7 @@ class User():
         return user_info
 
     def get_user_info_by_email(self,email):
-        condition = f"email='{email}'"
+        condition = f"email=''{email}''"
         self.user_table.set_table(self.conn,User.table_name)
         tmp = self.user_table.select_table(self.conn,condition)
         if not tmp:
