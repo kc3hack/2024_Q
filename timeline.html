@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <style>
+.btn {
+position:fixed;
+right:50px;
+bottom:50px;
+transition:1s;
+opacity:0.7;
+}
+.btn:hover{
+opacity:1;
+}
+
+
+    </style>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      crossorigin="anonymous"
+    />
+    <title>Portfolio</title>
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <!-- ナビゲーションメニュー -->
+    <nav
+    class="navbar navbar-expand-lg navbar-light text-dark bg-dark"
+    id="home"
+  >
+    <a class="navbar-brand text-white" href="/">ドケチ掲示板</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/post/index">投稿</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="#contact">アカウント</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+    <!-- カード -->
+    <div class="container my-5" id="skill">
+      <h2 class="py-4 text-dark">タイムライン</h2>
+      <div class="row row-cols-1 row-cols-md-3">
+        {% for post, user in posts_users %}
+        <div class="col mb-4">
+          <div class="card">
+            <!-- ここにユーザー情報を表示 -->
+            <!-- TODO 投稿者のページに飛べるようにaタグを -->
+            
+          
+            <div class="card-header"> <p> <a href="../user/{{user.0}}">投稿者: {{ user.1 }}</a></p></div>
+            <div class="card-body">
+              <h5 class="card-title">{{ post.1 }}</h5>
+              <p class="card-text">{{ post.3 }}</p>
+            </div>
+            <div class="card-footer">価格: {{ post.2 }}円</div>
+          </div>
+          
+        </div>
+
+        {% endfor %}
+        
+      </div>
+      
+        <div class="btn">
+          <button type="submit" class="btn btn-success ">Post</button>
+
+        </div>
+
+      </div>
+    </div>
+  </body>
+</html>
