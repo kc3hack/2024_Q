@@ -8,84 +8,87 @@
     <!-- Bootstrap CSSの読み込み -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-    <title>Portfolio</title>
+    <title>ドケチ掲示板</title>
   </head>
-  <!-- ナビゲーションメニュー -->
-  <nav class="navbar navbar-expand-lg navbar-light text-dark bg-secondary" id="home">
-    <a class="navbar-brand text-white" href="#">ドケチ掲示板</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-    </button>
+
+
+  <nav class="navbar navbar-expand-lg navbar-light text-dark bg-dark" id="home">
+    <!-- ハンバーガーメニュー -->
+    <div class="justify-content-start">
+        <button class="navbar-toggler justify-content-start" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <!-- 中央の文字 -->
+    <a class="navbar-brand text-white justify-content-center"href="#">ドケチ掲示板</a>
+    
+
+    <!-- ユーザーアイコン -->
+    <button class="ban ban-outline-success my-2 my-sm-0" type="submit" >userIcon</button>
+
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-          <li class="nav-item active">
-          <a class="nav-link text-white" href="#home">ホーム <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-          <a class="nav-link text-white" href="#skill">投稿</a>
-          </li>
-          <li class="nav-item">
-          <a class="nav-link text-white" href="#contact">アカウント</a>
-          </li>
-      </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link text-white" href="#home">ホーム <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="#skill">投稿</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="#contact">プロフィール</a>
+            </li>
+        </ul>
     </div>
 </nav>
 
 
-  <h1>ユーザー新規登録</h1>
+<div class="container my-3" id="skill">
+  <h2 class= "py-4 text-dark">ユーザー新規登録</h2>
+</div>
+
   <!-- 問合せフォーム -->
 <div class="container my-5" id="contact">
-{% with messages = get_flashed_messages() %}
-    {% for message in messages %}
-    <li>
-        <i>
-            {{ message }}
-        </i>
-    </li>
-    {% endfor %}
- {% endwith %}
-    <form method="POST">
-       
+    <form>
         <div class="form-group">
             <label for="exampleInputEmail1">名前（漢字）</label>
-            <input placeholder="名前（漢字）" type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
             <small id="emailHelp" class="form-text text-muted">姓と名の間をひとマスあけて下さい　例：佐藤　太郎</small>
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1">名前（カタカナ）</label>
-            <input placeholder="名前（カタカナ）" type="text"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
             <small id="emailHelp" class="form-text text-muted">姓と名の間をひとマスあけて下さい　例：サトウ　タロウ</small>
           </div>
           <div class="form-group">
-            <label for="exampleInputEmail1">Eメールアドレス</label>
-            <input placeholder="E-mail" type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-            <small id="emailHelp" class="form-text text-muted">有効なE-mailアドレスを入力してください</small>
-          </div>
-          <div class="form-group">
-          
-            
-
             <label for="exampleInputEmail1">パスワード</label>
             <label for="exampleInputPassword1"></label>
-            <input  placeholder="Password" type="password" name="password" class="form-control" id="exampleInputPassword1">
+            <input type="password" class="form-control" id="exampleInputPassword1">
           </div>
           <div class="form-group">
-           
             <label for="exampleInputEmail1">パスワード（再確認）</label>
             <label for="exampleInputPassword1"></label>
-            <input placeholder="Password" type="password" class="form-control" id="exampleInputPassword1">
+            <input type="password" class="form-control" id="exampleInputPassword1">
           </div>
-        
-          <a>利用規約がうんたらかんたら</a>
+          <div>
+            <a href="index.html#notice">本サイトの利用規約
+            </a>
+          </div>
           <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">利用規約に同意します</label>
           </div>
           <button type="submit" class="btn btn-success">登録</button>
     </form>
-    <a href="/user/login">アカウントをお持ちの方</a>
+        </div>
   <body>
-    
+    <!-- フッター -->
+<footer class="bg-dark text-center">
+  <div class="container">
+      <p class="my-0 text-white py-3">ドケチ掲示板</p>
+      
+        
+  </div>
+</footer>
     <!-- jQuery,Popper.js,Bootstrap JSの順番で読み込む-->
     <!-- jQueryの読み込み -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

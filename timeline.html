@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
+    <style>
+.btn {
+position:fixed;
+right:50px;
+bottom:50px;
+transition:1s;
+opacity:0.7;
+}
+.btn:hover{
+opacity:1;
+}
+
+
+    </style>
     <meta charset="utf-8" />
     <meta
       name="viewport"
@@ -50,7 +64,7 @@
           <a class="nav-link text-white" href="/post/index">投稿</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="/">アカウント</a>
+          <a class="nav-link text-white" href="#contact">アカウント</a>
         </li>
       </ul>
     </div>
@@ -58,33 +72,13 @@
     <!-- カード -->
     <div class="container my-5" id="skill">
       <h2 class="py-4 text-dark">タイムライン</h2>
-      <a href="#" id="locationLink">距離順でsort</a>
-
-    <script>
-        function setLocationHref(position) {
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
-            const href = `/post/sort?lat=${latitude}&long=${longitude}`;
-            document.getElementById('locationLink').href = href;
-        }
-
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(setLocationHref);
-            } else {
-                alert("Geolocation is not supported by this browser.");
-            }
-        }
-
-        // 位置情報を取得してリンクを設定
-        getLocation();
-    </script>
       <div class="row row-cols-1 row-cols-md-3">
         {% for post, user in posts_users %}
         <div class="col mb-4">
           <div class="card">
             <!-- ここにユーザー情報を表示 -->
             <!-- TODO 投稿者のページに飛べるようにaタグを -->
+            
           
             <div class="card-header"> <p> <a href="../user/{{user.0}}">投稿者: {{ user.1 }}</a></p></div>
             <div class="card-body">
@@ -92,13 +86,19 @@
               <p class="card-text">{{ post.3 }}</p>
             </div>
             <div class="card-footer">価格: {{ post.2 }}円</div>
-            <a href="/post/{{post.0}}">詳細</a>
           </div>
+          
         </div>
+
         {% endfor %}
+        
+      </div>
+      
         <div class="btn">
-            <button type="submit" class="btn btn-success "><a href="/post/create">Post</a></button>
-  
+          <button type="submit" class="btn btn-success ">Post</button>
+
+        </div>
+
       </div>
     </div>
   </body>

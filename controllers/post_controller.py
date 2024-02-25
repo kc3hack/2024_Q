@@ -44,7 +44,7 @@ class post_controller():
 
     def read_post(self,id):
         post = self.posts.get_post(id)
-        return render_template('post/detail.html',post = post)
+        return render_template('post/show.html',post = post)
 
     def create(self,user_id):
         if request.method == 'POST':

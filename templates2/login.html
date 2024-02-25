@@ -32,58 +32,27 @@
 </nav>
 
 
-  <h1>ユーザー新規登録</h1>
+  <h2>ログイン</h2>
   <!-- 問合せフォーム -->
 <div class="container my-5" id="contact">
-{% with messages = get_flashed_messages() %}
-    {% for message in messages %}
-    <li>
-        <i>
-            {{ message }}
-        </i>
-    </li>
-    {% endfor %}
- {% endwith %}
-    <form method="POST">
-       
-        <div class="form-group">
-            <label for="exampleInputEmail1">名前（漢字）</label>
-            <input placeholder="名前（漢字）" type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-            <small id="emailHelp" class="form-text text-muted">姓と名の間をひとマスあけて下さい　例：佐藤　太郎</small>
+    <form>
+        
+          <div class="form-group">
+            <label for="exampleInputEmail1">E-mail</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
           </div>
           <div class="form-group">
-            <label for="exampleInputEmail1">名前（カタカナ）</label>
-            <input placeholder="名前（カタカナ）" type="text"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-            <small id="emailHelp" class="form-text text-muted">姓と名の間をひとマスあけて下さい　例：サトウ　タロウ</small>
-          </div>
-          <div class="form-group">
-            <label for="exampleInputEmail1">Eメールアドレス</label>
-            <input placeholder="E-mail" type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-            <small id="emailHelp" class="form-text text-muted">有効なE-mailアドレスを入力してください</small>
-          </div>
-          <div class="form-group">
-          
-            
-
             <label for="exampleInputEmail1">パスワード</label>
             <label for="exampleInputPassword1"></label>
-            <input  placeholder="Password" type="password" name="password" class="form-control" id="exampleInputPassword1">
+            <input type="password" class="form-control" id="exampleInputPassword1">
           </div>
-          <div class="form-group">
-           
-            <label for="exampleInputEmail1">パスワード（再確認）</label>
-            <label for="exampleInputPassword1"></label>
-            <input placeholder="Password" type="password" class="form-control" id="exampleInputPassword1">
-          </div>
-        
-          <a>利用規約がうんたらかんたら</a>
           <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">利用規約に同意します</label>
           </div>
-          <button type="submit" class="btn btn-success">登録</button>
+          <button type="submit" class="btn btn-success">Login</button>
     </form>
-    <a href="/user/login">アカウントをお持ちの方</a>
+        </div>
   <body>
     
     <!-- jQuery,Popper.js,Bootstrap JSの順番で読み込む-->
@@ -95,10 +64,3 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
   </body>
 </html>
-
-
-
-
-
-
-    
