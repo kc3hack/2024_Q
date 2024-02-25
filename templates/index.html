@@ -76,26 +76,41 @@
           zoom: 15,
         });
 
-
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(
             (position) => {
               const pos = {
                 lat: position.coords.latitude,
-                lng: position.coords.longitude
+                lng: position.coords.longitude,
               };
               map.setCenter(pos);
 
               fetch(`/api/near_store?lat=${pos.lat}&lng=${pos.lng}`)
-                .then(response => response.json())
-                .then(data => {
-                  data.forEach(store => {
+                .then((response) => response.json())
+                .then((data) => {
+                  data.forEach((store) => {
+                    // マーカーの作成
                     console.log(store);
-                    new google.maps.Marker({
-                      position: {lat: store.lat, lng: store.lng},
+                    let marker = new google.maps.Marker({
+                      position: {
+                        lat: parseFloat(store[2]),
+                        lng: parseFloat(store[3]),
+                      },
                       map: map,
-                      title: store.name,
+                      title: store[1],
                     });
+                    // HTML要素を動的に生成してページに追加
+                    const card = document.createElement("div");
+                    card.className = "card mx-auto";
+                    card.style = "width: 40rem; margin-top: 20px;";
+                    card.innerHTML = `
+                                <div class="card-body">
+                                    <h5 class="card-title">${store[0][1]}</h5>
+                                    <h6 class="card-subtitle mb-2 text-body-secondary">${Math.round(store[1]*100)/100} km</h6> <!-- 仮に店舗距離をstoreの6番目の要素としています -->
+                                </div>
+                                &nbsp;
+                            `;
+                    document.body.appendChild(card); // または特定の要素に追加
                   });
                 });
             },
@@ -181,45 +196,7 @@
       <label for="textarea">メモ:</label>
       <textarea id="textarea" class="form-control"></textarea>
     </div>
-    <p>付近の店舗一覧を表示</p>
-
-    <div class="card mx-auto" style="width: 40rem">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-        <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-        <a href="#" class="card-link">Google Mapsで見る</a>
-      </div>
-    </div>
-    &nbsp;
-
-    <div class="card mx-auto" style="width: 40rem">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-        <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-        <a href="#" class="card-link">Google Mapsで見る</a>
-      </div>
-    </div>
-    &nbsp;
-    <div class="card mx-auto" style="width: 40rem">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-        <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-        <a href="#" class="card-link">Google Mapsで見る</a>
-      </div>
-    </div>
-    &nbsp;
-
-    <div class="card mx-auto" style="width: 40rem">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-        <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-        <a href="#" class="card-link">Google Mapsで見る</a>
-      </div>
-    </div>
+    <p>付近で投稿がある店舗一覧を表示</p>
 
     <!-- フッター -->
     <div id="footerWrap">

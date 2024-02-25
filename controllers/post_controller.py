@@ -19,8 +19,21 @@ class post_controller():
         #あとでformの名前かえる
         # sort = request.form['sort']
         post_list = self.posts.get_all_posts()
+        print("--------------------")
+        print(post_list)
+        post_sort_list = sorted(post_list, key=lambda post: int(post[2]))
         # if(sort != None):
         #     post_list = self.posts.get_posts(f"title colum Link '%{sort}%'")
+        user_list = []
+        for post in post_sort_list:
+            user = User()
+            user_info = user.get_user_info(post[4])
+            user_list.append(user_info)
+        posts_users = zip(post_sort_list, user_list)
+        return render_template('post/timeline.html',posts_users = posts_users)
+    
+    def read_sort_posts(self,lati,long):
+        post_list = self.get_near_post(lati,long)
         user_list = []
         for post in post_list:
             user = User()
@@ -28,7 +41,7 @@ class post_controller():
             user_list.append(user_info)
         posts_users = zip(post_list, user_list)
         return render_template('post/timeline.html',posts_users = posts_users)
-    
+
     def read_post(self,id):
         post = self.posts.get_post(id)
         return render_template('post/show.html',post = post)
@@ -96,9 +109,10 @@ class post_controller():
         
         posts = []
         for store in stores:
-            store_id = store[0]
-            store_posts = self.posts.get_posts(f"store_id={store_id}")
+            store_id = store[0][0]
+            store_posts = self.posts.get_posts(f"store_id='{store_id}'")
             posts.extend(store_posts)
+            print(store_posts)
             if len(posts) > 100:
                 break
 

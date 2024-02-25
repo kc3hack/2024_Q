@@ -82,6 +82,17 @@ def read_all_post():
         return redirect(url_for('login'))
     return post_controller.read_all()
 
+@app.route('/post/sort', methods=['GET'])
+def read_sort_posts():
+    if not user_controller.user_login_check_flag():
+        return redirect(url_for('login'))
+    lati = request.args.get('lat')
+    long = request.args.get('long')
+    print("++++++++++++++")
+    print(lati)
+    print(long)
+    return post_controller.read_sort_posts(lati,long)
+
 @app.route('/post/create', methods=['GET', 'POST'])
 def create_post():
     if not user_controller.user_login_check_flag():

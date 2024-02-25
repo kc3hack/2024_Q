@@ -139,4 +139,4 @@ class Stores():
         distances.sort(key=lambda x: x[1])
 
         # ソートされた店舗のリストを返す
-        return [store for store, distance in distances]
+        return distances
