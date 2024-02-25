@@ -28,38 +28,33 @@
   <body>
     <!-- ナビゲーションメニュー -->
     <nav
-      class="navbar navbar-expand-lg navbar-light text-dark bg-dark"
-      id="home"
+    class="navbar navbar-expand-lg navbar-light text-dark bg-dark"
+    id="home"
+  >
+    <a class="navbar-brand text-white" href="/">ドケチ掲示板</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
     >
-      <a class="navbar-brand text-white" href="#">Portfolio</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link text-white" href="#home"
-              >Home <span class="sr-only">(current)</span></a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" href="#skill">Skill</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" href="#contact">Contact</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/post/index">投稿</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/">アカウント</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
     <!-- カード -->
     <div class="container my-5" id="skill">
       <h2 class="py-4 text-dark">タイムライン</h2>
@@ -69,15 +64,20 @@
           <div class="card">
             <!-- ここにユーザー情報を表示 -->
             <!-- TODO 投稿者のページに飛べるようにaタグを -->
-            <div class="card-header">投稿者: {{ user.1 }}</div>
+          
+            <div class="card-header"> <p> <a href="../user/{{user.0}}">投稿者: {{ user.1 }}</a></p></div>
             <div class="card-body">
               <h5 class="card-title">{{ post.1 }}</h5>
               <p class="card-text">{{ post.3 }}</p>
             </div>
             <div class="card-footer">価格: {{ post.2 }}円</div>
+            <a href="/post/{{post.0}}">詳細</a>
           </div>
         </div>
         {% endfor %}
+        <div class="btn">
+            <button type="submit" class="btn btn-success "><a href="/post/create">Post</a></button>
+  
       </div>
     </div>
   </body>
