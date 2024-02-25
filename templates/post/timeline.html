@@ -69,7 +69,8 @@
           <div class="card">
             <!-- ここにユーザー情報を表示 -->
             <!-- TODO 投稿者のページに飛べるようにaタグを -->
-            <div class="card-header">投稿者: {{ user.1 }}</div>
+          
+            <div class="card-header"> <p> <a href="../user/{{user.0}}">投稿者: {{ user.1 }}</a></p></div>
             <div class="card-body">
               <h5 class="card-title">{{ post.1 }}</h5>
               <p class="card-text">{{ post.3 }}</p>
