@@ -83,9 +83,18 @@
           </div>
           <button type="submit" class="btn btn-success">登録</button>
     </form>
+    <button type="submit" class="btn btn-success" disabled>登録</button>
     <a href="/user/login">アカウントをお持ちの方</a>
   <body>
-    
+    <script>
+      function test(){
+        if (document.querySelector("input#exampleCheck1").checked){
+          document.querySelector("button.btn.btn-success").disabled = false;
+        } else {
+          document.querySelector("button.btn.btn-success").disabled = true;
+        }
+      }
+    </script>
     <!-- jQuery,Popper.js,Bootstrap JSの順番で読み込む-->
     <!-- jQueryの読み込み -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
