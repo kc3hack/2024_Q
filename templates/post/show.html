@@ -34,7 +34,7 @@
               <a class="nav-link text-white" href="/post/index">投稿</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href="#contact">アカウント</a>
+              <a class="nav-link text-white" href="/user/{{my_user}}">アカウント</a>
             </li>
           </ul>
         </div>
@@ -49,10 +49,11 @@
         <div class="card" style="width: 30rem;">
             <ul class="list-group list-group-flush">
               <li class="list-group-item text-center">
-                {{ post.0.1 }}
+                {{title}}
               </li>
-              <li class="list-group-item">コメント：{{post.0.3}}</li>
-              <li class="list-group-item">値段：{{post.0.2}}</li>
+              <li class="list-group-item">ユーザー：{{user_info.1}}</li>
+              <li class="list-group-item">コメント：{{body}}</li>
+              <li class="list-group-item">値段：{{price}}</li>
               <li class="list-group-item">場所：{{store_name}}</li>
             </ul>
           </div>

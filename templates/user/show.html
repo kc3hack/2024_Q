@@ -58,7 +58,7 @@
           <a class="nav-link text-white" href="/post/index">投稿</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="#contact">アカウント</a>
+          <a class="nav-link text-white" href="/user/{{my_user}}">アカウント</a>
         </li>
       </ul>
     </div>
@@ -73,9 +73,9 @@
     <p class="h5 h5 ail text-center">{{user_info.2}}</p>
     <p class="text-muted text-center">メールアドレス</p>
     &nbsp;
-
-    <p class="h5 password text-center">パスワード変更</p>
-
+    {% if my_info != Not %}
+    <p class="h5 password text-center"><a href="./logout">ログアウト</a></p>
+    {% endif %} 
     <div id="footerWrap">
       <div id="footer">
         <!-- フッター -->

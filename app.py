@@ -3,6 +3,7 @@ import dotenv
 from flask import Flask, jsonify, redirect, render_template, request, session, url_for
 import requests
 from common.models.store import Stores
+from common.models.user import User
 
 from controllers.user_controller import user_controller
 from controllers.post_controller import post_controller
@@ -24,9 +25,11 @@ def login():
     
 @app.route('/')
 def index():
+    user = User()
+    my_user = user.get_user_info(session['user_id'])[0]
     if user_controller.user_login_check_flag():
        
-        return render_template('index.html')
+        return render_template('index.html',my_user = my_user)
     return redirect(url_for('signup'))
 
 
@@ -95,12 +98,13 @@ def read_sort_posts():
 
 @app.route('/post/create', methods=['GET', 'POST'])
 def create_post():
+    user_id = session['user_id']
     if not user_controller.user_login_check_flag():
         return redirect(url_for('login'))
     if request.method == 'POST':
-        return post_controller.create(session['user_id'])
+        return post_controller.create(user_id)
     else:
-        return render_template('post/create.html')
+        return render_template('post/create.html',user_id = user_id)
 
 @app.route('/post/delete/<int:post_id>', methods=['GET'])
 def delete_post(post_id):

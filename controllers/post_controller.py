@@ -18,6 +18,8 @@ class post_controller():
     def read_all(self):
         #あとでformの名前かえる
         # sort = request.form['sort']
+        user = User()
+        my_user = user.get_user_info(session['user_id'])[0]
         post_list = self.posts.get_all_posts()
         print("--------------------")
         print(post_list)
@@ -30,21 +32,30 @@ class post_controller():
             user_info = user.get_user_info(post[4])
             user_list.append(user_info)
         posts_users = zip(post_sort_list, user_list)
-        return render_template('post/timeline.html',posts_users = posts_users)
+        return render_template('post/timeline.html',posts_users = posts_users,my_user = my_user)
     
     def read_sort_posts(self,lati,long):
         post_list = self.get_near_post(lati,long)
         user_list = []
+        user = User()
+        my_user = user.get_user_info(session['user_id'])[0]
         for post in post_list:
             user = User()
             user_info = user.get_user_info(post[4])
             user_list.append(user_info)
         posts_users = zip(post_list, user_list)
-        return render_template('post/timeline.html',posts_users = posts_users)
+        return render_template('post/timeline.html',posts_users = posts_users,my_user = my_user)
 
     def read_post(self,id):
         post = self.posts.get_post(id)
-        return render_template('post/show.html',post = post)
+        user = User()
+        stores = Stores()
+        my_user = user.get_user_info(session['user_id'])[0]
+        user_info = user.get_user_info(post[0][4])
+        body = post[0][3]
+        price = post[0][2]
+        store_name = stores.get_store(post[0][5])[1]
+        return render_template('post/show.html',post = post,user_info = user_info,body=body,price = price,store_name = store_name,my_user = my_user)
 
     def create(self,user_id):
         if request.method == 'POST':
@@ -92,7 +103,7 @@ class post_controller():
             user_info = user.get_user_info(user_id)
             store_name = self.stores.get_store(store_id)[1]
             return render_template('post/show.html',title=title,price=price,body=body,store_name=store_name,user_info=user_info)
-        return render_template('post/create.html')
+        return render_template('post/create.html',user_info = user_info)
 
         
     def delete(self,id):

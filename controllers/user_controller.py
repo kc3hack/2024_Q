@@ -51,12 +51,13 @@ class user_controller():
     def currrent_user_info(self):
         user = User()
         user_info = user.get_user_info(session['user_id'])
-        return flask.render_template('user/show.html',user_info=user_info)
+        return flask.render_template('user/show.html',user_info=user_info,my_info = user_info,my_user =user_info[0])
 
     def user_info(self,user_id):
         user = User()
         user_info = user.get_user_info(user_id)
-        return flask.render_template('user/show.html',user_info=user_info)
+        my_user = user.get_user_info(session['user_id'])[0]
+        return flask.render_template('user/show.html',user_info=user_info,my_user = my_user)
 
     def user_delete(self):
         user = User()
